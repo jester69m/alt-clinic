@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Management</title>
+</head>
+<body>
+<h1>Doctor Management</h1>
+
+<h2>Doctors List</h2>
+<table>
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Second Name</th>
+        <th scope="col">Patronymic<th>
+        <th scope="col">Email<th>
+        <th scope="col">Password<th>
+        <th scope="col">Phone number<th>
+        <th scope="col">Age<th>
+        <th scope="col">Specialty<th>
+        <th scope="col">Education<th>
+        <th scope="col">Experience<th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterating over the list of doctors -->
+    <tr th:each="doctor : ${doctors}">
+        <td th:text="${doctor.id}"></td>
+        <td th:text="${doctor.first_name}"></td>
+        <td th:text="${doctor.second_name}"></td>
+        <td th:text="${doctor.patronymic}"></td>
+        <td th:text="${doctor.email}"></td>
+        <td th:text="${doctor.password}"></td>
+        <td th:text="${doctor.phone_number}"></td>
+        <td th:text="${doctor.age}"></td>
+        <td th:text="${doctor.specialty}"></td>
+        <td th:text="${doctor.education}"></td>
+        <td th:text="${doctor.experience}"></td>
+        <td>
+            <!-- Update button to edit doctor -->
+            <a th:href="@{/doctors/{id}/edit(id=${doctor.id})}">Edit</a>
+            <!-- Delete button to remove doctor -->
+            <a th:href="@{/doctors/{id}/delete(id=${doctor.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Add New Doctor</h2>
+<form th:action="@{/doctors}" method="post">
+    <label>First Name: </label>
+    <input type="text" name="first_name" required><br>
+    <label>Second Name: </label>
+    <input type="text" name="second_name" required><br>
+    <label>Patronymic: </label>
+    <input type="text" name="patronymic" required><br>
+    <label>Email: </label>
+    <input type="text" name="email" required><br>
+    <label>Password: </label>
+    <input type="text" name="password" required><br>
+    <label>Phone Number: </label>
+    <input type="text" name="phone_number" required><br>
+    <label>Age: </label>
+    <input type="text" name="age" required><br>
+    <label>Specialty: </label>
+    <input type="text" name="specialty" required><br>
+    <label>Education: </label>
+    <input type="text" name="education" required><br>
+    <label>Experience: </label>
+    <input type="text" name="experience" required><br>
+    <input type="submit" value="Add Doctor">
+</form>
+</body>
+</html>
