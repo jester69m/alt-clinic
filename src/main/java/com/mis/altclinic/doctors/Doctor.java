@@ -1,13 +1,17 @@
 package com.mis.altclinic.doctors;
 
+import com.mis.altclinic.medservices.MedService;
 import com.mis.altclinic.users.Role;
 import com.mis.altclinic.users.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +33,9 @@ public class Doctor extends User {
 
     private String experience;
 
+    @OneToMany
+    private List<MedService> medServices;
+
 
     public Doctor(String first_name,
                   String last_name,
@@ -41,6 +48,7 @@ public class Doctor extends User {
                   String specialty,
                   String education,
                   String experience,
+                  List<MedService> medServices,
                   Boolean enabled) {
         super(first_name,last_name, email, password, role, enabled);
         this.patronymic = patronymic;
@@ -49,5 +57,6 @@ public class Doctor extends User {
         this.specialty = specialty;
         this.education = education;
         this.experience = experience;
+        this.medServices = medServices;
     }
 }

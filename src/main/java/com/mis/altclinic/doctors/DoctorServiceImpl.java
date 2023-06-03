@@ -1,5 +1,6 @@
 package com.mis.altclinic.doctors;
 
+import com.mis.altclinic.medservices.MedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -66,5 +67,15 @@ public class DoctorServiceImpl implements DoctorService{
         if(doctorRepository.existsById(id))
             doctorRepository.deleteById(id);
 
+    }
+
+    @Override
+    public List<MedService> addMedService(Long id, MedService medService) {
+        Optional<Doctor> doctor = findById(id);
+        if(doctor.isEmpty())
+            return null;
+        doctor.get().getMedServices().add(medService);
+        save(doctor.get());
+        return doctor.get().getMedServices();
     }
 }

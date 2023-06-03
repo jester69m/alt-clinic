@@ -13,7 +13,7 @@ public class MedServiceController {
     private final MedServiceRepository medServiceRepository;
 
     public String index(Model model) {
-        model.addAttribute("medservices", medServiceRepository.findAll());
+        model.addAttribute("medServices", medServiceRepository.findAll());
         return "index";
     }
 }
