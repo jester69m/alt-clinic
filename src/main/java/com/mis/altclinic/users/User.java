@@ -21,16 +21,18 @@ import java.util.Collections;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User implements UserDetails {
 
-    @SequenceGenerator(
-            name = "consumer_sequence",
-            sequenceName = "consumer_sequence",
-            allocationSize = 1
-    )
+//    @SequenceGenerator(
+//            name = "consumer_sequence",
+//            sequenceName = "consumer_sequence",
+//            allocationSize = 1
+//    )
+//    @Id
+//    @GeneratedValue(
+//            strategy = GenerationType.SEQUENCE,
+//            generator = "consumer_sequence"
+//    )
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "consumer_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(length = 50, nullable = false)

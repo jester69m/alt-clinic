@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
@@ -23,7 +24,14 @@ public class MedService {
     private Long id;
     @NotNull
     private String name;
+    @Length(max = 1000)
     private String description;
     @PositiveOrZero
     private Double price;
+
+    public MedService(String name, String description, Double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }

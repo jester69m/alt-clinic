@@ -41,16 +41,14 @@ public class Doctor extends User {
                   String last_name,
                   String email,
                   String password,
-                  Role role,
                   String patronymic,
                   String phone_number,
-                  Integer age,
+                  int age,
                   String specialty,
                   String education,
                   String experience,
-                  List<MedService> medServices,
-                  Boolean enabled) {
-        super(first_name,last_name, email, password, role, enabled);
+                  List<MedService> medServices) {
+        super(first_name,last_name, email, password, Role.ROLE_DOCTOR, true);
         this.patronymic = patronymic;
         this.phone_number = phone_number;
         this.age = age;

@@ -1,24 +1,31 @@
 package com.mis.altclinic.consumers;
 
-import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
 
-@Service
-@AllArgsConstructor
-public class ConsumerService implements UserDetailsService {
+public interface ConsumerService {
 
-    private final ConsumerRepository consumerRepository;
-    private final static String USER_NOT_FOUND =
-            "user with email %s not found";
+    Optional<Consumer> getConsumerById(Long id);
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return consumerRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(
-                                String.format(USER_NOT_FOUND,email)));
-    }
+    List<Consumer> findAll();
+
+    Optional<Consumer> getConsumerByEmail(String email);
+
+    Consumer save(Consumer consumer);
+
+    boolean saveAll(List<Consumer> consumers);
+
+    void deleteConsumer(Long id);
+
+    void updateConsumer(Long id,
+                        String first_name,
+                        String last_name,
+                        String email,
+                        String password,
+                        String patronymic,
+                        String phone_number,
+                        String address,
+                        Integer age,
+                        String blood_type,
+                        Boolean enabled);
 }

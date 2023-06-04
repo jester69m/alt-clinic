@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Consumer Page</title>
+  <link rel="stylesheet" th:href="@{/static/css/styles.css}" />
+</head>
+<body>
+<div class="menu">
+  <!-- Your button menu code here -->
+</div>
+<div class="content">
+  <h2>Consumer Page</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Patronymic</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Address</th>
+      <th>Age</th>
+      <th>Blood type</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="consumer : ${consumers}">
+      <td th:text="${consumer.first_name}"></td>
+      <td th:text="${consumer.last_name}"></td>
+        <td th:text="${consumer.patronymic}"></td>
+      <td th:text="${consumer.email}"></td>
+        <td th:text="${consumer.phone_number}"></td>
+        <td th:text="${consumer.address}"></td>
+        <td th:text="${consumer.age}"></td>
+        <td th:text="${consumer.blood_type}"></td>
+      <td>
+        <a th:href="@{/consumers/{id}/edit(id=${consumer.id})}">Edit</a>
+        <a th:href="@{/consumers/{id}/delete(id=${consumer.id})}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+<!--  <h2>Create Consumer</h2>-->
+<!--  <form th:action="@{/consumers}" method="post" th:object="${consumer}">-->
+<!--    <div>-->
+<!--      <label>First Name:</label>-->
+<!--      <label>-->
+<!--        <input type="text" th:field="*{first_name}" />-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Last Name:</label>-->
+<!--      <label>-->
+<!--        <input type="text" th:field="*{last_name}" />-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Email:</label>-->
+<!--      <label>-->
+<!--        <input type="email" th:field="*{email}" />-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Password:</label>-->
+<!--      <label>-->
+<!--        <input type="password" th:field="*{password}" />-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Patronymic:</label>-->
+<!--      <label>-->
+<!--        <input type="text" th:field="*{patronymic}" />-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Phone Number:</label>-->
+<!--      <label>-->
+<!--        <input type="text" th:field="*{phone_number}" />-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Address:</label>-->
+<!--      <label>-->
+<!--        <input type="text" th:field="*{address}" />-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Age:</label>-->
+<!--      <label>-->
+<!--        <input type="number" th:field="*{age}" />-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <label>Blood Type:</label>-->
+<!--      <label>-->
+<!--        <input type="text" th:field="*{blood_type}" />-->
+<!--      </label>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <input type="submit" value="Create" />-->
+<!--    </div>-->
+<!--  </form>-->
+</div>
+</body>
+</html>

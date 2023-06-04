@@ -33,20 +33,18 @@ public class Consumer extends User {
                     String last_name,
                     String email,
                     String password,
-                    Role role,
                     String patronymic,
                     String phone_number,
                     String address,
-                    Integer age,
-                    String blood_type,
-                    Boolean enabled) {
+                    int age,
+                    String blood_type) {
 
-        super(first_name,last_name, email, password, role, enabled);
+        super(first_name,last_name, email, password, Role.ROLE_CONSUMER, true);
         this.patronymic = patronymic;
         this.phone_number = phone_number;
         this.address = address;
         this.age = age;
         this.blood_type = blood_type;
-
     }
+
 }
