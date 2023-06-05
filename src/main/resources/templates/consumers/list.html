@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Consumers</title>
+
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+  <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+
+  <style>
+    .table-container {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+  </style>
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: menu"></div>
+
+<div class="container">
+  <h1>Consumers</h1>
+  <a class="btn btn-primary mb-3" th:href="@{/consumers/add}">Add New Consumer</a>
+  <div class="table-container">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>PIB</th>
+      <th>Contact</th>
+      <th>Address</th>
+      <th>Age</th>
+      <th>Blood type</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="consumer : ${consumers}">
+      <td th:text="${consumer.first_name + ' ' +consumer.last_name + ' ' + consumer.patronymic}"></td>
+      <td th:text="${consumer.email + ' ' + consumer.phone_number}"></td>
+      <td th:text="${consumer.address}"></td>
+      <td th:text="${consumer.age}"></td>
+      <td th:text="${consumer.blood_type}"></td>
+      <td>
+        <a class="btn btn-info" th:href="@{/medservices/edit/{id}(id=${consumer.id})}">Edit</a>
+        <a class="btn btn-danger" th:href="@{/medservices/delete/{id}(id=${consumer.id})}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div th:replace="~{fragments/footer :: footer}"></div>
+
+  <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+
+</div>
+</body>
+</html>

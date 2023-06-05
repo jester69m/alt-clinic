@@ -1,6 +1,7 @@
 package com.mis.altclinic.doctors;
 
 import com.mis.altclinic.medservices.MedService;
+import com.mis.altclinic.users.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class DoctorServiceImpl implements DoctorService{
+public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
 
@@ -29,21 +30,59 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
+    public Doctor save(DoctorDto doctor) {
+        Doctor d1 = new Doctor();
+        d1.setFirst_name(doctor.getFirst_name());
+        d1.setLast_name(doctor.getLast_name());
+        d1.setEmail(doctor.getEmail());
+        d1.setPassword(doctor.getPassword());
+        d1.setPatronymic(doctor.getPatronymic());
+        d1.setPhone_number(doctor.getPhone_number());
+        d1.setAge(doctor.getAge());
+        d1.setSpecialty(doctor.getSpecialty());
+        d1.setEducation(doctor.getEducation());
+        d1.setExperience(doctor.getExperience());
+        d1.setMedServices(doctor.getMedServices());
+        d1.setRole(Role.ROLE_DOCTOR);
+        d1.setEnabled(true);
+        return doctorRepository.save(d1);
+//
+//        return doctorRepository.save(new Doctor(
+//                doctor.getFirst_name(),
+//                doctor.getLast_name(),
+//                doctor.getEmail(),
+//                doctor.getPassword(),
+//                doctor.getPatronymic(),
+//                doctor.getPhone_number(),
+//                doctor.getAge(),
+//                doctor.getSpecialty(),
+//                doctor.getEducation(),
+//                doctor.getExperience(),
+//                doctor.getMedServices()
+//        ));
+    }
+
     public Doctor save(Doctor doctor) {
         return doctorRepository.save(doctor);
     }
 
     @Override
-    public void saveAll(List<Doctor> doctors) {
-        doctorRepository.saveAll(doctors);
+    public void saveAll(List<DoctorDto> doctors) {
+        for (DoctorDto doctor : doctors)
+            save(doctor);
+    }
+    @Override
+    public void saveAll2(List<Doctor> doctors) {
+        for( Doctor doctor : doctors)
+            save(doctor);
     }
 
     @Override
     public Doctor update(Long id, Doctor doctor) {
-        if(doctor == null)
+        if (doctor == null)
             return null;
         Optional<Doctor> check = findById(id);
-        if(check.isEmpty())
+        if (check.isEmpty())
             return null;
         Doctor updated = check.get();
         updated.setFirst_name(doctor.getFirst_name());
@@ -64,15 +103,19 @@ public class DoctorServiceImpl implements DoctorService{
 
     @Override
     public void delete(Long id) {
-        if(doctorRepository.existsById(id))
+        if (doctorRepository.existsById(id))
             doctorRepository.deleteById(id);
+    }
 
+    @Override
+    public void deleteAll() {
+        doctorRepository.deleteAll();
     }
 
     @Override
     public List<MedService> addMedService(Long id, MedService medService) {
         Optional<Doctor> doctor = findById(id);
-        if(doctor.isEmpty())
+        if (doctor.isEmpty())
             return null;
         doctor.get().getMedServices().add(medService);
         save(doctor.get());

@@ -27,8 +27,6 @@ public class Consumer extends User {
     @Column(length = 3)
     private String blood_type;
 
-
-
     public Consumer(String first_name,
                     String last_name,
                     String email,
@@ -39,7 +37,7 @@ public class Consumer extends User {
                     int age,
                     String blood_type) {
 
-        super(first_name,last_name, email, password, Role.ROLE_CONSUMER, true);
+        super(first_name, last_name, email, password, Role.ROLE_CONSUMER, true);
         this.patronymic = patronymic;
         this.phone_number = phone_number;
         this.address = address;

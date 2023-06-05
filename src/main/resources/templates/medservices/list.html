@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Medical Services</title>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: menu"></div>
+
+<div class="container">
+    <h1>Med Services</h1>
+    <a class="btn btn-primary mb-3" th:href="@{/medservices/add}">Add New Med Service</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="medService : ${medServices}">
+            <td th:text="${medService.id}"></td>
+            <td th:text="${medService.name}"></td>
+            <td th:text="${medService.description}"></td>
+            <td th:text="${medService.price}"></td>
+            <td>
+                <a class="btn btn-info" th:href="@{/medservices/edit/{id}(id=${medService.id})}">Edit</a>
+                <a class="btn btn-danger" th:href="@{/medservices/delete/{id}(id=${medService.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

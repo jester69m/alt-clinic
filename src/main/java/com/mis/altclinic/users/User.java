@@ -18,7 +18,7 @@ import java.util.Collections;
 @ToString
 @Entity
 @Table(name = "_user")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User implements UserDetails {
 
 //    @SequenceGenerator(

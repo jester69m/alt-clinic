@@ -1,47 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
-  <title>Consumer Page</title>
-  <link rel="stylesheet" th:href="@{/static/css/styles.css}" />
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-<div class="menu">
-  <!-- Your button menu code here -->
-</div>
-<div class="content">
-  <h2>Consumer Page</h2>
-  <table>
-    <thead>
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Patronymic</th>
-      <th>Email</th>
-      <th>Phone Number</th>
-      <th>Address</th>
-      <th>Age</th>
-      <th>Blood type</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="consumer : ${consumers}">
-      <td th:text="${consumer.first_name}"></td>
-      <td th:text="${consumer.last_name}"></td>
-        <td th:text="${consumer.patronymic}"></td>
-      <td th:text="${consumer.email}"></td>
-        <td th:text="${consumer.phone_number}"></td>
-        <td th:text="${consumer.address}"></td>
-        <td th:text="${consumer.age}"></td>
-        <td th:text="${consumer.blood_type}"></td>
-      <td>
-        <a th:href="@{/consumers/{id}/edit(id=${consumer.id})}">Edit</a>
-        <a th:href="@{/consumers/{id}/delete(id=${consumer.id})}">Delete</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-
 <!--  <h2>Create Consumer</h2>-->
 <!--  <form th:action="@{/consumers}" method="post" th:object="${consumer}">-->
 <!--    <div>-->
@@ -102,6 +65,5 @@
 <!--      <input type="submit" value="Create" />-->
 <!--    </div>-->
 <!--  </form>-->
-</div>
 </body>
 </html>

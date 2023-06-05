@@ -46,20 +46,18 @@ public class ConsumerServiceImpl implements UserDetailsService , ConsumerService
     }
 
     @Override
-    public boolean saveAll(List<Consumer> consumers) {
-        boolean result = true;
-        for(Consumer consumer : consumers){
-            if(consumerRepository.findById(consumer.getId()).isPresent()){
-                result = false;
-            }
-            consumerRepository.save(consumer);
-        }
-        return result;
+    public void saveAll(List<Consumer> consumers) {
+        consumerRepository.saveAll(consumers);
     }
 
     @Override
     public void deleteConsumer(Long id) {
         consumerRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll(){
+        consumerRepository.deleteAll();
     }
 
     @Override

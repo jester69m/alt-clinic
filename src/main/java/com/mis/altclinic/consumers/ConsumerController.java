@@ -19,7 +19,13 @@ public class ConsumerController {
     public String showAll(Model model) {
         model.addAttribute("consumers", consumerService.findAll());
         model.addAttribute("consumer", new Consumer());
-        return "consumers/consumers";
+        return "consumers/list";
+    }
+
+    @GetMapping("/add")
+    public String addConsumer(Model model) {
+        model.addAttribute("consumer", new Consumer());
+        return "consumers/add";
     }
 
     @PostMapping
@@ -28,9 +34,9 @@ public class ConsumerController {
             consumerService.save(consumer);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while adding the consumer.");
-            return "redirect:/consumers/consumers";
+            return "redirect:/list";
         }
-        return "redirect:/consumers/consumers";
+        return "redirect:/list";
     }
 
 }

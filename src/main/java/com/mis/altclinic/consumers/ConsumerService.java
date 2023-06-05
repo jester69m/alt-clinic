@@ -13,9 +13,11 @@ public interface ConsumerService {
 
     Consumer save(Consumer consumer);
 
-    boolean saveAll(List<Consumer> consumers);
+    void saveAll(List<Consumer> consumers);
 
     void deleteConsumer(Long id);
+
+    void deleteAll();
 
     void updateConsumer(Long id,
                         String first_name,

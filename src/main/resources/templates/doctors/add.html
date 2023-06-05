@@ -5,9 +5,6 @@
   <link rel="stylesheet" th:href="@{static/css/styles.css}" />
 </head>
 <body>
-<div class="menu">
-  <!-- Your button menu code here -->
-</div>
 <div class="content">
   <h2>Add Doctor</h2>
   <form th:action="@{/doctors}" method="post" th:object="${doctor}">
@@ -71,15 +68,17 @@
             <input type="text" th:field="*{experience}" />
         </label>
     </div>
-    <div>
-        <label>Medical Services:</label>
-        <div th:each="medService : ${medServices}">
-            <label>
-                <input type="checkbox" th:field="*{medServices}" th:value="${medService}" />
-            </label>
-            <label th:text="${medService}"></label>
-        </div>
-    </div>
+      <div>
+          <label>Medservices:</label>
+          <label>
+              <select multiple th:field="*{medServices}">
+                  <option th:each="medservice : ${medServices}"
+                          th:value="${medservice.id}"
+                          th:text="${medservice.name}">
+                  </option>
+              </select>
+          </label>
+      </div>
       <input type="submit" value="Add" />
   </form>
 </div>

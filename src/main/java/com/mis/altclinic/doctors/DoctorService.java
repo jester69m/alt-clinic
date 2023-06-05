@@ -10,10 +10,13 @@ public interface DoctorService {
     Optional<Doctor> findById(Long id);
     List<Doctor> findAll();
 
+    Doctor save(DoctorDto doctor);
     Doctor save(Doctor doctor);
-    void saveAll(List<Doctor> doctors);
+    void saveAll(List<DoctorDto> doctors);
+    void saveAll2(List<Doctor> doctors);
     Doctor update(Long id, Doctor doctor);
     void delete(Long id);
+    void deleteAll();
 
     List<MedService> addMedService(Long id, MedService medService);
 

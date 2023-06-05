@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Doctors</title>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+
+    <style>
+        .table-container {
+            max-width: 100%;
+            overflow-x: auto;
+        }
+    </style>
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: menu}"></div>
+
+<div class="container">
+    <h1>Doctors</h1>
+    <a class="btn btn-primary mb-3" th:href="@{/doctors/add}">Add New Doctor</a>
+    <div class="table-container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>PIB</th>
+            <th>Contact</th>
+            <th>Age</th>
+            <th>Specialty</th>
+            <th>Education</th>
+            <th>Experience</th>
+            <th>Medical Services</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop through the list of doctors and populate the table rows -->
+        <tr th:each="doctor : ${doctors}">
+            <td th:text="${doctor.first_name + ' ' +doctor.last_name + ' ' + doctor.patronymic}"></td>
+            <td th:text="${doctor.email + ' ' + doctor.phone_number}"></td>
+            <td th:text="${doctor.age}"></td>
+            <td th:text="${doctor.specialty}"></td>
+            <td th:text="${doctor.education}"></td>
+            <td th:text="${doctor.experience}"></td>
+            <td>
+                <ul>
+                    <!-- Loop through the list of medical services for each doctor -->
+                    <li th:each="medService : ${doctor.medServices}" th:text="${medService.name}"></li>
+                </ul>
+            </td>
+            <td>
+                <a class="btn btn-info" th:href="@{/doctors/{id}/edit(id=${doctor.id})}">Edit</a>
+                <a class="btn btn-danger" th:href="@{/doctors/{id}/delete(id=${doctor.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

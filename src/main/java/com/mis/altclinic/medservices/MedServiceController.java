@@ -19,22 +19,29 @@ public class MedServiceController {
     @GetMapping
     public String showAll(Model model) {
         model.addAttribute("medServices", medServiceRepository.findAll());
-        return "medservices/medservices";
+        return "medservices/list";
     }
 
     @GetMapping("/add")
      public String showAddForm(Model model) {
         model.addAttribute("medService", new MedService());
-        return "medservices/add-medservice";
+        return "medservices/add";
     }
     @PostMapping("/add")
     public String addMedService(@ModelAttribute("medService") MedService medService, RedirectAttributes redirectAttributes) {
-        try {
-            medServiceRepository.save(medService);
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while adding the medService.");
-            return "redirect:/medservices/add-medservice";
-        }
-        return "redirect:/medservices/medservices";
+        medServiceRepository.save(medService);
+        return "redirect:/medservices";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(Model model, Long id) {
+        model.addAttribute("medService", medServiceRepository.findById(id));
+        return "medservices/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editMedService(@ModelAttribute("medService") MedService medService, RedirectAttributes redirectAttributes) {
+        medServiceRepository.save(medService);
+        return "redirect:/medservices";
     }
 }

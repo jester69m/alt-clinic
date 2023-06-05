@@ -9,54 +9,51 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/doctors")
 public class DoctorController {
 
     private final DoctorService doctorService;
     private final MedServiceRepository medService;
 
-    @GetMapping("/doctors")
+    @GetMapping
     public String showAll(Model model) {
         model.addAttribute("doctors", doctorService.findAll());
-        return "doctors/doctors";
+        return "doctors/list";
     }
 
-    @GetMapping("/doctors/add")
-    public String showAddDoctorForm(Model model) {
-        model.addAttribute("doctor", new Doctor());
+    @GetMapping("/add")
+    public String addDoctorForm(Model model) {
+        model.addAttribute("doctor", new DoctorDto());
         model.addAttribute("medServices", medService.findAll());
-        return "doctors/add-doctor";
+        return "doctors/add";
     }
 
-    @PostMapping("/doctors/add")
-    public String addDoctor(@ModelAttribute("doctor") Doctor doctor, RedirectAttributes redirectAttributes) {
-        try {
-            doctorService.save(doctor);
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while adding the doctor.");
-            return "redirect:/doctors/add";
-        }
-        return "redirect:/doctors";
+    @PostMapping("/add")
+    public String addDoctor(@ModelAttribute DoctorDto doctor) {
+        doctorService.save(doctor);
+        return "redirect:/doctors/list";
     }
 
-    @GetMapping("/doctors/{id}/edit")
-    public String showEditDoctorForm(Model model, @PathVariable Long id) {
-        model.addAttribute("doctor", doctorService.findById(id));
+    @GetMapping("/edit/{id}")
+    public String showEditDoctorForm(@PathVariable Long id, Model model) {
+        model.addAttribute("doctor", doctorService.findById(id).get());
         model.addAttribute("medServices", medService.findAll());
-        return "doctors/edit-doctor";
+        return "doctors/edit";
     }
 
-    @PostMapping("/doctors/{id}/edit")
-    public String editDoctor(@ModelAttribute("doctor") Doctor doctor, RedirectAttributes redirectAttributes) {
+    @PostMapping("/edit/{id}")
+    public String editDoctor(@ModelAttribute("doctor") DoctorDto doctor, RedirectAttributes redirectAttributes, @PathVariable Long id) {
+        Doctor d1 = null;
         try {
-            doctorService.save(doctor);
+             d1 = doctorService.save(doctor);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while editing the doctor.");
-            return "redirect:/doctors/" + doctor.getId() + "/edit";
+            return "redirect:/doctors/edit/" + d1.getId();
         }
-        return "redirect:/doctors";
+        return "redirect:/doctors/list";
     }
 
-    @DeleteMapping("/doctors/{id}/delete")
+    @PostMapping("/delete/{id}")
     public String deleteDoctor(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
             doctorService.delete(id);
