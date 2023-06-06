@@ -9,7 +9,11 @@ import com.mis.altclinic.doctors.Doctor;
 import com.mis.altclinic.doctors.DoctorService;
 import com.mis.altclinic.medservices.MedService;
 import com.mis.altclinic.medservices.MedServiceRepository;
+import com.mis.altclinic.users.Role;
+import com.mis.altclinic.users.User;
+import com.mis.altclinic.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,14 +26,19 @@ private final MedServiceRepository medServiceRepository;
 private final DoctorService doctorService;
 private final ConsumerService consumerService;
 private final DoctorAppointmentService doctorAppointmentService;
+private final UserRepository userRepository;
+private final PasswordEncoder passwordEncoder;
 
 
     @Autowired
-    public PopulateDB(MedServiceRepository medServiceRepository, DoctorService doctorService, ConsumerService consumerService, DoctorAppointmentService doctorAppointmentService) {
+    public PopulateDB(MedServiceRepository medServiceRepository, DoctorService doctorService, ConsumerService consumerService, DoctorAppointmentService doctorAppointmentService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.medServiceRepository = medServiceRepository;
         this.doctorService = doctorService;
         this.consumerService = consumerService;
         this.doctorAppointmentService = doctorAppointmentService;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.
 
         populate();
     }
@@ -93,6 +102,13 @@ private final DoctorAppointmentService doctorAppointmentService;
 
         List<DoctorAppointment> doctorAppointments = List.of(da1,da2,da3,da4,da5,da6,da7,da8,da9,da10,da11);
         doctorAppointmentService.saveAll(doctorAppointments);
+
+        User admin = User.builder()
+                .email("admin")
+                .password(passwordEncoder.encode("admin"))
+                .role(Role.ROLE_ADMIN)
+                .build();
+        userRepository.save(admin);
     }
 
 }
