@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class ConsumerServiceImpl implements UserDetailsService , ConsumerService{
 
     private final ConsumerRepository consumerRepository;
+    private final PasswordEncoder encoder;
     private final static String USER_NOT_FOUND =
             "user with email %s not found";
 
@@ -42,11 +44,14 @@ public class ConsumerServiceImpl implements UserDetailsService , ConsumerService
 
     @Override
     public Consumer save(Consumer consumer) {
+        consumer.setPassword(encoder.encode(consumer.getPassword()));
         return consumerRepository.save(consumer);
     }
 
     @Override
     public void saveAll(List<Consumer> consumers) {
+        for(Consumer consumer : consumers)
+            consumer.setPassword(encoder.encode(consumer.getPassword()));
         consumerRepository.saveAll(consumers);
     }
 

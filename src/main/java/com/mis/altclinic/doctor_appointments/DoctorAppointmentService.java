@@ -19,4 +19,7 @@ public interface DoctorAppointmentService {
 
     DoctorAppointment update(Long id, DoctorAppointment doctorAppointment);
     DoctorAppointment update(Long id, DoctorAppointmentDto doctorAppointmentDto);
+
+    List<DoctorAppointment> showForConsumer(Long id);
+    List<DoctorAppointment> showForDoctor(Long id);
 }

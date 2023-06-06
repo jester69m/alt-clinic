@@ -1,4 +1,6 @@
-<html xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+
 >
 <head>
   <div th:fragment="header-css">
@@ -53,6 +55,12 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" th:href="@{/doctor_appointments}">Doctor Appointments</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a th:if="${#authorization.expression('isAnonymous()')}"
+               class="nav-link" href="/login">Login</a>
           </li>
         </ul>
       </div>

@@ -18,6 +18,10 @@ import java.util.List;
 @AllArgsConstructor
 public class Doctor extends User {
 
+    private String first_name;
+
+    private String last_name;
+
     private String patronymic;
 
     @Column(length = 13)
@@ -47,7 +51,9 @@ public class Doctor extends User {
                   String education,
                   String experience,
                   List<MedService> medServices) {
-        super(first_name,last_name, email, password, Role.ROLE_DOCTOR, true);
+        super(email, password, Role.ROLE_DOCTOR, true);
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.patronymic = patronymic;
         this.phone_number = phone_number;
         this.age = age;

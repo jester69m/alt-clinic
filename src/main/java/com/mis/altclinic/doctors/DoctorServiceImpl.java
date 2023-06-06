@@ -3,6 +3,7 @@ package com.mis.altclinic.doctors;
 import com.mis.altclinic.medservices.MedService;
 import com.mis.altclinic.users.Role;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<Doctor> findByEmail(String email) {
@@ -35,7 +37,7 @@ public class DoctorServiceImpl implements DoctorService {
         d1.setFirst_name(doctor.getFirst_name());
         d1.setLast_name(doctor.getLast_name());
         d1.setEmail(doctor.getEmail());
-        d1.setPassword(doctor.getPassword());
+        d1.setPassword(passwordEncoder.encode(doctor.getPassword()));
         d1.setPatronymic(doctor.getPatronymic());
         d1.setPhone_number(doctor.getPhone_number());
         d1.setAge(doctor.getAge());
@@ -46,23 +48,10 @@ public class DoctorServiceImpl implements DoctorService {
         d1.setRole(Role.ROLE_DOCTOR);
         d1.setEnabled(true);
         return doctorRepository.save(d1);
-//
-//        return doctorRepository.save(new Doctor(
-//                doctor.getFirst_name(),
-//                doctor.getLast_name(),
-//                doctor.getEmail(),
-//                doctor.getPassword(),
-//                doctor.getPatronymic(),
-//                doctor.getPhone_number(),
-//                doctor.getAge(),
-//                doctor.getSpecialty(),
-//                doctor.getEducation(),
-//                doctor.getExperience(),
-//                doctor.getMedServices()
-//        ));
     }
 
     public Doctor save(Doctor doctor) {
+        doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
         return doctorRepository.save(doctor);
     }
 

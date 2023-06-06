@@ -84,5 +84,15 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
         }
         return save(doctorAppointmentDto);
     }
+
+    @Override
+    public List<DoctorAppointment> showForDoctor(Long id) {
+        return doctorAppointmentsRepository.findByDoctorId(id);
+    }
+
+    @Override
+    public List<DoctorAppointment> showForConsumer(Long id) {
+        return doctorAppointmentsRepository.findByConsumerId(id);
+    }
 }
 
