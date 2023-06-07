@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DoctorService {
-    Optional<Doctor> findByEmail(String email);
     Optional<Doctor> findById(Long id);
     List<Doctor> findAll();
 

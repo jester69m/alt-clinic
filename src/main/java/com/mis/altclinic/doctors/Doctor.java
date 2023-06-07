@@ -51,7 +51,7 @@ public class Doctor extends User {
                   String education,
                   String experience,
                   List<MedService> medServices) {
-        super(email, password, Role.ROLE_DOCTOR, true);
+        super(email, password, Role.ROLE_DOCTOR);
         this.first_name = first_name;
         this.last_name = last_name;
         this.patronymic = patronymic;

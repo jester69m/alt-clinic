@@ -41,7 +41,7 @@ public class Consumer extends User {
                     int age,
                     String blood_type) {
 
-        super(email, password, Role.ROLE_CONSUMER, true);
+        super(email, password, Role.ROLE_CONSUMER);
         this.first_name = first_name;
         this.last_name = last_name;
         this.patronymic = patronymic;

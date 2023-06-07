@@ -9,11 +9,13 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: menu"></div>
+<div th:replace="~{fragments/header :: menu}"></div>
 
 <div class="container">
     <h1>Med Services</h1>
-    <a class="btn btn-primary mb-3" th:href="@{/medservices/add}">Add New Med Service</a>
+    <a
+            th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
+            class="btn btn-primary mb-3" th:href="@{/medservices/add}">Add New Med Service</a>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -30,8 +32,12 @@
             <td th:text="${medService.description}"></td>
             <td th:text="${medService.price}"></td>
             <td>
-                <a class="btn btn-info" th:href="@{/medservices/edit/{id}(id=${medService.id})}">Edit</a>
-                <a class="btn btn-danger" th:href="@{/medservices/delete/{id}(id=${medService.id})}">Delete</a>
+                <a
+                        th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
+                        class="btn btn-info" th:href="@{/medservices/edit/{id}(id=${medService.id})}">Edit</a>
+                <a
+                        th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
+                        class="btn btn-danger" th:href="@{/medservices/delete/{id}(id=${medService.id})}">Delete</a>
             </td>
         </tr>
         </tbody>

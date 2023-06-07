@@ -9,8 +9,6 @@ public interface ConsumerService {
 
     List<Consumer> findAll();
 
-    Optional<Consumer> getConsumerByEmail(String email);
-
     Consumer save(Consumer consumer);
 
     void saveAll(List<Consumer> consumers);

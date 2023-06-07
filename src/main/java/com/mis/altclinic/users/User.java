@@ -45,11 +45,10 @@ public class User implements UserDetails {
 
     private Boolean enabled;
 
-    public User(String email, String password, Role role, Boolean enabled) {
+    public User(String email, String password, Role role) {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.enabled = enabled;
     }
 
     @Override
@@ -85,6 +84,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
 }

@@ -17,11 +17,6 @@ public class DoctorServiceImpl implements DoctorService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Optional<Doctor> findByEmail(String email) {
-        return doctorRepository.findByEmail(email);
-    }
-
-    @Override
     public Optional<Doctor> findById(Long id) {
         return doctorRepository.findById(id);
     }

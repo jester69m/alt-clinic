@@ -25,7 +25,6 @@
     <h1>Doctors</h1>
     <a
             th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-            th:attr="${#authorization.expression('!hasAuthority(''ROLE_ADMIN'')')} ? disabled : null"
             class="btn btn-primary mb-3" th:href="@{/doctors/add}">Add New Doctor</a>
     <div class="table-container">
     <table class="table table-striped">
@@ -57,12 +56,11 @@
             </td>
             <td>
                 <a
+
                         th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-                        th:attr="${#authorization.expression('!hasAuthority(''ROLE_ADMIN'')')} ? disabled : null"
                         class="btn btn-info" th:href="@{/doctors/{id}/edit(id=${doctor.id})}">Edit</a>
                 <a
                         th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-                        th:attr="${#authorization.expression('!hasAuthority(''ROLE_ADMIN'')')} ? disabled : null"
                         class="btn btn-danger" th:href="@{/doctors/{id}/delete(id=${doctor.id})}">Delete</a>
             </td>
         </tr>

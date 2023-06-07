@@ -12,20 +12,13 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class ConsumerServiceImpl implements UserDetailsService , ConsumerService{
+public class ConsumerServiceImpl implements ConsumerService{
 
     private final ConsumerRepository consumerRepository;
     private final PasswordEncoder encoder;
     private final static String USER_NOT_FOUND =
             "user with email %s not found";
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return consumerRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException(
-                                String.format(USER_NOT_FOUND,email)));
-    }
 
     @Override
     public Optional<Consumer> getConsumerById(Long id) {
@@ -35,11 +28,6 @@ public class ConsumerServiceImpl implements UserDetailsService , ConsumerService
     @Override
     public List<Consumer> findAll() {
         return consumerRepository.findAll();
-    }
-
-    @Override
-    public Optional<Consumer> getConsumerByEmail(String email) {
-        return consumerRepository.findByEmail(email);
     }
 
     @Override
