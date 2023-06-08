@@ -58,10 +58,10 @@
                 <a
 
                         th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-                        class="btn btn-info" th:href="@{/doctors/{id}/edit(id=${doctor.id})}">Edit</a>
+                        class="btn btn-info" th:href="@{/doctors/edit/{id}(id=${doctor.id})}">Edit</a>
                 <a
                         th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-                        class="btn btn-danger" th:href="@{/doctors/{id}/delete(id=${doctor.id})}">Delete</a>
+                        class="btn btn-danger" th:href="@{/doctors/delete/{id}(id=${doctor.id})}">Delete</a>
             </td>
         </tr>
         </tbody>

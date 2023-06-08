@@ -30,12 +30,7 @@ public class ConsumerController {
 
     @PostMapping
     public String addConsumer(Consumer consumer, RedirectAttributes redirectAttributes) {
-        try{
             consumerService.save(consumer);
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while adding the consumer.");
-            return "redirect:/list";
-        }
         return "redirect:/list";
     }
 

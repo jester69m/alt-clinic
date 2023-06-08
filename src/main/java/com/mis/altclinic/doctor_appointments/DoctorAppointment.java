@@ -20,10 +20,10 @@ public class DoctorAppointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Consumer consumer;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Doctor doctor;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")

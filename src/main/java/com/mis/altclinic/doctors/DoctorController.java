@@ -31,7 +31,7 @@ public class DoctorController {
     @PostMapping("/add")
     public String addDoctor(@ModelAttribute @RequestBody DoctorDto doctor) {
         doctorService.save(doctor);
-        return "redirect:/doctors/list";
+        return "redirect:/doctors   ";
     }
 
     @GetMapping("/edit/{id}")
@@ -43,24 +43,13 @@ public class DoctorController {
 
     @PostMapping("/edit/{id}")
     public String editDoctor(@ModelAttribute("doctor") DoctorDto doctor, RedirectAttributes redirectAttributes, @PathVariable Long id) {
-        Doctor d1 = null;
-        try {
-             d1 = doctorService.save(doctor);
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while editing the doctor.");
-            return "redirect:/doctors/edit/" + d1.getId();
-        }
+        Doctor d1 = doctorService.save(doctor);;
         return "redirect:/doctors/list";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteDoctor(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        try {
-            doctorService.delete(id);
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "An error occurred while deleting the doctor.");
-            return "redirect:/doctors";
-        }
+        doctorService.delete(id);
         return "redirect:/doctors";
     }
 

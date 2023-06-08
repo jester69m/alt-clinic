@@ -15,19 +15,9 @@ import java.util.Optional;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
     private final UserRepository userRepository;
-    private final ConsumerRepository consumerRepository;
-    private final DoctorRepository doctorRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserDetails user = userRepository.findByEmail(email);
-        if(user.getUsername() != null){
-            return user;
-        }
-        user = consumerRepository.findByEmail(email);
-        if(user.getUsername() != null){
-            return user;
-        }
-        return doctorRepository.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 }

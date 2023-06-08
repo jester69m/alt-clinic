@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/doctors/**", "/medservices/**", "/doctor_appointment/**","/consumers/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
+                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.defaultSuccessUrl("/",true))
                 .logout(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
 
@@ -47,37 +47,8 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails admin = User.builder()
-//                .email("admin")
-//                .password(passwordEncoder().encode("123"))
-//                .role(Role.ROLE_ADMIN)
-//                .build();
-//
-//        UserDetails consumer = User.builder()
-//                .email("consumer")
-//                .password(passwordEncoder().encode("123"))
-//                .role(Role.ROLE_CONSUMER)
-//                .build();
-//
-//        UserDetails doctor = User.builder()
-//                .email("doctor")
-//                .password(passwordEncoder().encode("123"))
-//                .role(Role.ROLE_DOCTOR)
-//                .build();
-//        return new InMemoryUserDetailsManager(admin,consumer, doctor);
-//    }
-
+    @Bean
     public AuthenticationProvider authenticationProvider() {
         return new CustomAuthenticationProvider(userDetailsService, passwordEncoder());
-    }
-
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
     }
 }
