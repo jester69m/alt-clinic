@@ -23,7 +23,6 @@
             <th>Doctor</th>
             <th>Date</th>
             <th>Time</th>
-            <th>Status</th>
             <th>Comment</th>
             <th>Price</th>
         </tr>
@@ -34,7 +33,6 @@
             <td th:text="${appointment.doctor.first_name + ' ' + appointment.doctor.last_name + ' ' +appointment.doctor.patronymic}"></td>
             <td th:text="${#temporals.format(appointment.date_time, 'dd/MM/yyyy')}"></td>
             <td th:text="${#temporals.format(appointment.date_time, 'HH:mm')}"></td>
-            <td th:text="${appointment.status}"></td>
             <td th:text="${appointment.comment}"></td>
             <td th:text="${appointment.price}"></td>
             <td>

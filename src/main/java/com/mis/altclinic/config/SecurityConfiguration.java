@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home","/doctors", "/medservices").permitAll()
                         .requestMatchers("/login", "/register").permitAll()
-                        .requestMatchers("/doctors/**", "/medservices/**", "/doctor_appointment/**","/consumers/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/doctors/**", "/medservices/**", "/doctor_appointment/**","/consumers/**").permitAll()//TODO: change to ROLE when end configuration
                         .anyRequest().authenticated()
                 )
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.defaultSuccessUrl("/",true))

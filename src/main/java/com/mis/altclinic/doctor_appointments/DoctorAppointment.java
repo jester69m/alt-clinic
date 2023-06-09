@@ -29,9 +29,6 @@ public class DoctorAppointment {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime date_time;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     private String comment;
 
     private Double price;
@@ -39,13 +36,11 @@ public class DoctorAppointment {
     public DoctorAppointment(Consumer consumer,
                              Doctor doctor,
                              LocalDateTime date_time,
-                             Status status,
                              String comment,
                              Double price) {
         this.consumer = consumer;
         this.doctor = doctor;
         this.date_time = date_time;
-        this.status = status;
         this.comment = comment;
         this.price = price;
     }

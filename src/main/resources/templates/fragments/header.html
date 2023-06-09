@@ -54,9 +54,18 @@
             <a
                     th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
                     class="nav-link" th:href="@{/consumers}">Consumers</a>
+            <a
+                    th:if="${#authorization.expression('hasAuthority(''ROLE_CONSUMER'')')}"
+                    class="nav-link" th:href="@{/consumers/info}">Account</a>
+
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/doctor_appointments}">Doctor Appointments</a>
+            <a
+                    th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
+                    class="nav-link" th:href="@{/doctor_appointments}">Doctor Appointments</a>
+            <a
+                    th:if="${#authorization.expression('hasAuthority(''ROLE_CONSUMER'')')}"
+                    class="nav-link" th:href="@{/doctor_appointments/consumer}">My Appointments</a>
           </li>
         </ul>
 <!--        <ul class="navbar-nav ml-auto">-->

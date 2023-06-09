@@ -28,4 +28,5 @@ public interface ConsumerService {
                         Integer age,
                         String blood_type,
                         Boolean enabled);
+
 }

@@ -33,7 +33,6 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
         doctorAppointment.setConsumer(doctorAppointmentDto.getConsumer());
         doctorAppointment.setDoctor(doctorAppointmentDto.getDoctor());
         doctorAppointment.setDate_time(doctorAppointmentDto.getDate_time());
-        doctorAppointment.setStatus(doctorAppointmentDto.getStatus());
         doctorAppointment.setComment(doctorAppointmentDto.getComment());
         doctorAppointment.setPrice(doctorAppointmentDto.getPrice());
         return doctorAppointmentsRepository.save(doctorAppointment);
@@ -62,7 +61,6 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
             doctorAppointment1.setConsumer(doctorAppointment.getConsumer());
             doctorAppointment1.setDoctor(doctorAppointment.getDoctor());
             doctorAppointment1.setDate_time(doctorAppointment.getDate_time());
-            doctorAppointment1.setStatus(doctorAppointment.getStatus());
             doctorAppointment1.setPrice(doctorAppointment.getPrice());
             return doctorAppointmentsRepository.save(doctorAppointment1);
         }
@@ -77,7 +75,6 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
             doctorAppointment1.setConsumer(doctorAppointmentDto.getConsumer());
             doctorAppointment1.setDoctor(doctorAppointmentDto.getDoctor());
             doctorAppointment1.setDate_time(doctorAppointmentDto.getDate_time());
-            doctorAppointment1.setStatus(doctorAppointmentDto.getStatus());
             doctorAppointment1.setComment(doctorAppointmentDto.getComment());
             doctorAppointment1.setPrice(doctorAppointmentDto.getPrice());
             return doctorAppointmentsRepository.save(doctorAppointment1);

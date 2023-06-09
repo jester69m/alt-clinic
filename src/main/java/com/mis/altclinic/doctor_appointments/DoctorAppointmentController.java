@@ -1,7 +1,10 @@
 package com.mis.altclinic.doctor_appointments;
 
+import com.mis.altclinic.consumers.Consumer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +22,7 @@ public class DoctorAppointmentController {
     private final DoctorAppointmentService doctorAppointmentService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String showAll(Model model) {
         List<DoctorAppointment> appointments = doctorAppointmentService.findAll();
         model.addAttribute("appointments", appointments);
@@ -32,11 +36,16 @@ public class DoctorAppointmentController {
         return "doctor_appointments/list";
     }
 
-    @GetMapping("/consumer/{id}")
+    @GetMapping("/consumer")
     @PreAuthorize("hasRole('ROLE_CONSUMER')")
-    public String showForConsumer(@PathVariable Long id, Model model) {
-        model.addAttribute("doctorAppointment", doctorAppointmentService.showForConsumer(id));
-        return "doctor_appointments/list";
+    public String showForConsumer(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Consumer consumer = (Consumer) authentication.getPrincipal();
+
+        long consumerId = consumer.getId();
+
+        model.addAttribute("doctorAppointment", doctorAppointmentService.showForConsumer(consumerId));
+        return "doctor_appointments/consumer";
     }
 
     @GetMapping("/add")
