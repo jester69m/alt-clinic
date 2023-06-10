@@ -14,12 +14,12 @@
 <div th:replace="~{fragments/header :: menu}"></div>
 
 <div class="container">
-  <h1>Doctor Appointments</h1>
-  <a class="btn btn-primary mb-3" th:href="@{/doctor_appointments/add}">Register New</a>
+  <h1>My Appointments</h1>
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Doctor</th>
+      <th>Consumer</th>
+      <th>Email</th>
       <th>Date</th>
       <th>Time</th>
       <th>Comment</th>
@@ -28,7 +28,8 @@
     </thead>
     <tbody>
     <tr th:each="appointment : ${doctorAppointment}">
-      <td th:text="${appointment.doctor.first_name + ' ' + appointment.doctor.last_name + ' ' +appointment.doctor.patronymic}"></td>
+      <td th:text="${appointment.consumer.first_name + ' ' + appointment.consumer.last_name + ' ' +appointment.consumer.patronymic}"></td>
+      <td th:text="${appointment.getConsumer().email}"></td>
       <td th:text="${#temporals.format(appointment.getDate(), 'dd/MM/yyyy')}"></td>
       <td th:text="${#temporals.format(appointment.getTime(), 'HH:mm')}"></td>
       <td th:text="${appointment.comment}"></td>

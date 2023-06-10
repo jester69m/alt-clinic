@@ -36,11 +36,16 @@ public class DoctorAppointmentController {
         return "doctor_appointments/list";
     }
 
-    @GetMapping("/doctor/{id}")
+    @GetMapping("/doctor")
     @PreAuthorize("hasRole('ROLE_DOCTOR')")
-    public String showForDoctor(@PathVariable Long id, Model model) {
+    public String showForDoctor(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Doctor doctor = (Doctor) authentication.getPrincipal();
+
+        long id = doctor.getId();
+
         model.addAttribute("doctorAppointment", doctorAppointmentService.showForDoctor(id));
-        return "doctor_appointments/list";
+        return "doctor_appointments/doctor";
     }
 
     @GetMapping("/consumer")

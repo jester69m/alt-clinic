@@ -66,6 +66,9 @@
             <a
                     th:if="${#authorization.expression('hasAuthority(''ROLE_CONSUMER'')')}"
                     class="nav-link" th:href="@{/doctor_appointments/consumer}">My Appointments</a>
+            <a
+                    th:if="${#authorization.expression('hasAuthority(''ROLE_DOCTOR'')')}"
+                    class="nav-link" th:href="@{/doctor_appointments/doctor}">My Appointments</a>
           </li>
         </ul>
 <!--        <ul class="navbar-nav ml-auto">-->
