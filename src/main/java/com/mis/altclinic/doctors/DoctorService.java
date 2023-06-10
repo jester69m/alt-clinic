@@ -13,7 +13,7 @@ public interface DoctorService {
     Doctor save(Doctor doctor);
     void saveAll(List<DoctorDto> doctors);
     void saveAll2(List<Doctor> doctors);
-    Doctor update(Long id, Doctor doctor);
+    Doctor update(Long id, DoctorDto doctor);
     void delete(Long id);
     void deleteAll();
 

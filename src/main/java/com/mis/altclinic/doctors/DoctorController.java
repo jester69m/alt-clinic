@@ -42,13 +42,13 @@ public class DoctorController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editDoctor(@ModelAttribute("doctor") DoctorDto doctor, RedirectAttributes redirectAttributes, @PathVariable Long id) {
-        Doctor d1 = doctorService.save(doctor);;
-        return "redirect:/doctors/list";
+    public String editDoctor(@ModelAttribute("doctor") DoctorDto doctor, @PathVariable Long id) {
+        Doctor d1 = doctorService.update(id, doctor);;
+        return "redirect:/doctors";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteDoctor(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String deleteDoctor(@PathVariable Long id) {
         doctorService.delete(id);
         return "redirect:/doctors";
     }

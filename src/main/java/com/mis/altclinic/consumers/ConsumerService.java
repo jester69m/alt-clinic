@@ -13,11 +13,11 @@ public interface ConsumerService {
 
     void saveAll(List<Consumer> consumers);
 
-    void deleteConsumer(Long id);
+    void delete(Long id);
 
     void deleteAll();
 
-    void updateConsumer(Long id,
+    void update(Long id,
                         String first_name,
                         String last_name,
                         String email,

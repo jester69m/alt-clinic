@@ -3,6 +3,7 @@ package com.mis.altclinic.doctors;
 import com.mis.altclinic.medservices.MedService;
 import com.mis.altclinic.users.Role;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
@@ -18,16 +20,19 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public Optional<Doctor> findById(Long id) {
+        log.info("IN DoctorServiceImpl findById {}", id);
         return doctorRepository.findById(id);
     }
 
     @Override
     public List<Doctor> findAll() {
+        log.info("IN DoctorServiceImpl findAll");
         return doctorRepository.findAll();
     }
 
     @Override
     public Doctor save(DoctorDto doctor) {
+        log.info("IN DoctorServiceImpl save {}", doctor);
         Doctor d1 = new Doctor();
         d1.setFirst_name(doctor.getFirst_name());
         d1.setLast_name(doctor.getLast_name());
@@ -46,25 +51,27 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     public Doctor save(Doctor doctor) {
+        log.info("IN DoctorServiceImpl save {}", doctor);
         doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
         return doctorRepository.save(doctor);
     }
 
     @Override
     public void saveAll(List<DoctorDto> doctors) {
+        log.info("IN DoctorServiceImpl saveAll {}", doctors);
         for (DoctorDto doctor : doctors)
             save(doctor);
     }
     @Override
     public void saveAll2(List<Doctor> doctors) {
-        for( Doctor doctor : doctors)
+        log.info("IN DoctorServiceImpl saveAll {}", doctors);
+        for(Doctor doctor : doctors)
             save(doctor);
     }
 
     @Override
-    public Doctor update(Long id, Doctor doctor) {
-        if (doctor == null)
-            return null;
+    public Doctor update(Long id, DoctorDto doctor) {
+        log.info("IN DoctorServiceImpl update {}", doctor);
         Optional<Doctor> check = findById(id);
         if (check.isEmpty())
             return null;
@@ -72,27 +79,30 @@ public class DoctorServiceImpl implements DoctorService {
         updated.setFirst_name(doctor.getFirst_name());
         updated.setLast_name(doctor.getLast_name());
         updated.setPatronymic(doctor.getPatronymic());
-        updated.setEmail(doctor.getEmail());
-//        updated.setPassword(doctor.getPassword());
-        updated.setRole(doctor.getRole());
-        updated.setEnabled(doctor.getEnabled());
+        if(doctor.getEmail() != null)
+            updated.setEmail(doctor.getEmail());
+        if(doctor.getPassword() != null)
+            updated.setPassword(doctor.getPassword());
         updated.setPhone_number(doctor.getPhone_number());
         updated.setAge(doctor.getAge());
         updated.setSpecialty(doctor.getSpecialty());
         updated.setEducation(doctor.getEducation());
         updated.setExperience(doctor.getExperience());
+        if(doctor.getMedServices() != null)
+            updated.setMedServices(doctor.getMedServices());
 
         return doctorRepository.save(updated);
     }
 
     @Override
     public void delete(Long id) {
-        if (doctorRepository.existsById(id))
-            doctorRepository.deleteById(id);
+        log.info("IN DoctorServiceImpl delete {}", id);
+        doctorRepository.deleteById(id);
     }
 
     @Override
     public void deleteAll() {
+        log.info("IN DoctorServiceImpl deleteAll");
         doctorRepository.deleteAll();
     }
 
@@ -108,6 +118,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<String> getAllSpecialities() {
+        log.info("IN DoctorServiceImpl getAllSpecialities");
         return doctorRepository.findDistinctSpecialities();
     }
 }

@@ -1,6 +1,7 @@
 package com.mis.altclinic.consumers;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ConsumerServiceImpl implements ConsumerService{
 
     private final ConsumerRepository consumerRepository;
@@ -22,39 +24,57 @@ public class ConsumerServiceImpl implements ConsumerService{
 
     @Override
     public Optional<Consumer> getConsumerById(Long id) {
+        log.info("IN ConsumerServiceImpl getConsumerById {}", id);
         return consumerRepository.findById(id);
     }
 
     @Override
     public List<Consumer> findAll() {
+        log.info("IN ConsumerServiceImpl findAll");
         return consumerRepository.findAll();
     }
 
     @Override
     public Consumer save(Consumer consumer) {
+        log.info("IN ConsumerServiceImpl save {}", consumer);
         consumer.setPassword(encoder.encode(consumer.getPassword()));
         return consumerRepository.save(consumer);
     }
 
     @Override
     public void saveAll(List<Consumer> consumers) {
+        log.info("IN ConsumerServiceImpl saveAll {}", consumers);
         for(Consumer consumer : consumers)
             consumer.setPassword(encoder.encode(consumer.getPassword()));
         consumerRepository.saveAll(consumers);
     }
 
     @Override
-    public void deleteConsumer(Long id) {
+    public void delete(Long id) {
+        log.info("IN ConsumerServiceImpl delete {}", id);
         consumerRepository.deleteById(id);
     }
 
     @Override
     public void deleteAll(){
+        log.info("IN ConsumerServiceImpl deleteAll");
         consumerRepository.deleteAll();
     }
 
     @Override
-    public void updateConsumer(Long id, String first_name, String last_name, String email, String password, String patronymic, String phone_number, String address, Integer age, String blood_type, Boolean enabled) {
+    public void update(Long id,
+                       String first_name,
+                       String last_name,
+                       String email,
+                       String password,
+                       String patronymic,
+                       String phone_number,
+                       String address,
+                       Integer age,
+                       String blood_type,
+                       Boolean enabled) {
+        log.info("IN ConsumerServiceImpl update {}", id);
+
         Optional<Consumer> consumerOptional = consumerRepository.findById(id);
         if(consumerOptional.isEmpty()){
             throw new IllegalStateException("Consumer with id " + id + " does not exist");

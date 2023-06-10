@@ -4,6 +4,7 @@ import com.mis.altclinic.consumers.Consumer;
 import com.mis.altclinic.doctors.Doctor;
 import com.mis.altclinic.doctors.DoctorService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
 
     private final DoctorAppointmentsRepository doctorAppointmentsRepository;
@@ -24,21 +26,25 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
 
     @Override
     public Optional<DoctorAppointment> findById(Long id) {
+        log.info("IN DoctorAppointmentServiceImpl findById {}", id);
         return doctorAppointmentsRepository.findById(id);
     }
 
     @Override
     public List<DoctorAppointment> findAll() {
+        log.info("IN DoctorAppointmentServiceImpl findAll");
         return doctorAppointmentsRepository.findAll();
     }
 
     @Override
     public DoctorAppointment save(DoctorAppointment doctorAppointment) {
+        log.info("IN DoctorAppointmentServiceImpl save {}", doctorAppointment);
         return doctorAppointmentsRepository.save(doctorAppointment);
     }
 
     @Override
     public DoctorAppointment save(DoctorAppointmentDto doctorAppointmentDto) {
+        log.info("IN DoctorAppointmentServiceImpl save {}", doctorAppointmentDto);
         DoctorAppointment doctorAppointment = new DoctorAppointment();
         doctorAppointment.setConsumer(doctorAppointmentDto.getConsumer());
         doctorAppointment.setDoctor(doctorAppointmentDto.getDoctor());
@@ -51,21 +57,25 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
 
     @Override
     public void saveAll(List<DoctorAppointment> doctorAppointments) {
+        log.info("IN DoctorAppointmentServiceImpl saveAll {}", doctorAppointments);
         doctorAppointmentsRepository.saveAll(doctorAppointments);
     }
 
     @Override
     public void delete(Long id) {
+        log.info("IN DoctorAppointmentServiceImpl delete {}", id);
         doctorAppointmentsRepository.deleteById(id);
     }
 
     @Override
     public void deleteAll() {
+        log.info("IN DoctorAppointmentServiceImpl deleteAll");
         doctorAppointmentsRepository.deleteAll();
     }
 
     @Override
     public DoctorAppointment update(Long id, DoctorAppointment doctorAppointment) {
+        log.info("IN DoctorAppointmentServiceImpl update {}", doctorAppointment);
         Optional<DoctorAppointment> doctorAppointmentOptional = doctorAppointmentsRepository.findById(id);
         if(doctorAppointmentOptional.isPresent()) {
             DoctorAppointment doctorAppointment1 = doctorAppointmentOptional.get();
@@ -81,6 +91,7 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
 
     @Override
     public DoctorAppointment update(Long id, DoctorAppointmentDto doctorAppointmentDto) {
+        log.info("IN DoctorAppointmentServiceImpl update {}", doctorAppointmentDto);
         Optional<DoctorAppointment> doctorAppointmentOptional = doctorAppointmentsRepository.findById(id);
         if(doctorAppointmentOptional.isPresent()) {
             DoctorAppointment doctorAppointment1 = doctorAppointmentOptional.get();
@@ -97,6 +108,7 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
 
     @Override
     public List<DoctorAppointment> showForDoctor(Long id) {
+        log.info("IN DoctorAppointmentServiceImpl showForDoctor {}", id);
         return doctorAppointmentsRepository.findByDoctorId(id);
     }
 
@@ -130,6 +142,7 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
 
     @Override
     public List<DoctorAppointment> showForConsumer(Long id) {
+        log.info("IN DoctorAppointmentServiceImpl showForConsumer {}", id);
         return doctorAppointmentsRepository.findByConsumerId(id);
     }
 

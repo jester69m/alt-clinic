@@ -9,8 +9,6 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
-
 <div class="container">
     <h1>Edit Doctor</h1>
     <form method="post" th:action="@{/doctors/edit/{id}(id=${doctor.id})}"  th:object="${doctor}">
@@ -28,11 +26,11 @@
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input class="form-control" id="password" required th:field="*{password}" type="password">
+            <input class="form-control" id="password" type="password">
         </div>
         <div class="form-group">
             <label for="patronymic">Patronymic:</label>
-            <input class="form-control" id="patronymic" required th:field="*{patronymic}" type="text">
+            <input class="form-control" id="patronymic" th:value="*{patronymic}" required th:field="*{patronymic}" type="text">
         </div>
         <div class="form-group">
             <label for="phone_number">Phone Number:</label>
@@ -58,7 +56,7 @@
         <div class="form-group">
             <label for="medServices">Medical Services:</label>
             <select class="form-control" id="medServices" th:field="*{medServices}" multiple="multiple">
-                <option th:each="medService : ${medServices}" th:value="${medService}" th:text="${medService}"></option>
+                <option th:each="medService : ${medServices}" th:value="${medService.id}" th:text="${medService.name}"></option>
             </select>
         </div>
         <button class="btn btn-primary" type="submit">Update Doctor</button>
