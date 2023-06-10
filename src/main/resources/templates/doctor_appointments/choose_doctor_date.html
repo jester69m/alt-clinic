@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Appointment Form</title>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: menu}"></div>
+
+<div class="container">
+
+
+    <h1>Doctor Appointment</h1>
+
+    <!-- Check for error attribute and display error message if present -->
+    <div class="alert alert-danger" th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form action="/doctor_appointments/choose-doctor-date" method="POST" th:object="${doctorDate}">
+        <div class="form-group">
+            <label for="speciality">Choose a specialty:</label>
+            <select class="form-control" id="speciality" name="speciality" onchange="updateDoctorList(this.value)">
+                <option value="">-- Select Specialty --</option>
+                <option th:each="speciality : ${specialities}" th:text="${speciality}"
+                        th:value="${speciality}"></option>
+            </select>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="doctor">Choose a doctor:</label>
+            <select class="form-control" id="doctor" name="doctor" th:field="*{doctorId}">
+                <option value="">-- Select Doctor --</option>
+            </select>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="appointmentDate">Choose an appointment date (must be in the future):</label>
+            <input class="form-control" id="appointmentDate" name="appointmentDate" th:field="*{appointmentDate}"
+                   th:min="${minDate}" type="date">
+        </div>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Book Appointment">
+    </form>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+
+<script th:inline="javascript">
+
+    function updateDoctorList(selectedSpecialty) {
+        const doctors = [[${doctors}]];
+        const doctorSelect = document.getElementById("doctor");
+        doctorSelect.innerHTML = '';
+
+        for (let i = 0; i < doctors.length; i++) {
+            console.log("doctor: " + doctors[i])
+            if (doctors[i].specialty === selectedSpecialty) {
+                const option = document.createElement("option");
+                option.value = doctors[i].id;
+                option.text = doctors[i].last_name + ' ' + doctors[i].first_name;
+                doctorSelect.appendChild(option);
+            }
+        }
+        console.log(doctorSelect)
+    }
+</script>
+
+</body>
+</html>

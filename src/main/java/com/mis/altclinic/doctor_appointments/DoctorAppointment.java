@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -26,8 +28,11 @@ public class DoctorAppointment {
     @ManyToOne(cascade = CascadeType.REMOVE)
     private Doctor doctor;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime date_time;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate date;
+
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime time;
 
     private String comment;
 
@@ -35,12 +40,13 @@ public class DoctorAppointment {
 
     public DoctorAppointment(Consumer consumer,
                              Doctor doctor,
-                             LocalDateTime date_time,
+                             LocalDateTime dateTime,
                              String comment,
                              Double price) {
         this.consumer = consumer;
         this.doctor = doctor;
-        this.date_time = date_time;
+        this.date = dateTime.toLocalDate();
+        this.time = dateTime.toLocalTime();
         this.comment = comment;
         this.price = price;
     }

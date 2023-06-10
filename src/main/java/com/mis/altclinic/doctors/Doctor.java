@@ -3,12 +3,14 @@ package com.mis.altclinic.doctors;
 import com.mis.altclinic.medservices.MedService;
 import com.mis.altclinic.users.Role;
 import com.mis.altclinic.users.User;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Positive;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -37,7 +39,9 @@ public class Doctor extends User {
 
     private String experience;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    private int minsOfAppointment = 30;
+
+    @ManyToMany
     private List<MedService> medServices;
 
 

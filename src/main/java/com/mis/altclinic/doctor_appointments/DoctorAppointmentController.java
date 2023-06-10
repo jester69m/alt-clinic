@@ -1,25 +1,32 @@
 package com.mis.altclinic.doctor_appointments;
 
 import com.mis.altclinic.consumers.Consumer;
+import com.mis.altclinic.doctors.Doctor;
+import com.mis.altclinic.doctors.DoctorService;
+import com.mis.altclinic.medservices.MedService;
+import com.mis.altclinic.medservices.MedServiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/doctor_appointments")
+@SessionAttributes("doctorDate")
 public class DoctorAppointmentController {
 
     private final DoctorAppointmentService doctorAppointmentService;
+    private final DoctorService doctorService;
+    private final MedServiceRepository medServiceRepository;
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -49,15 +56,52 @@ public class DoctorAppointmentController {
     }
 
     @GetMapping("/add")
-    public String addDoctorAppointmentForm(Model model) {
-        model.addAttribute("doctorAppointment", new DoctorAppointmentDto());
+    public String showChoseDoctorDateForm(Model model) {
+        model.addAttribute("doctors", doctorAppointmentService.getAvailableDoctorsForUser());
+        model.addAttribute("specialities", doctorService.getAllSpecialities());
+        model.addAttribute("minDate", LocalDate.now());
+        model.addAttribute("doctorDate", new ChooseDoctorDateRequest());
+        return "doctor_appointments/choose_doctor_date";
+    }
+
+    @PostMapping("/choose-doctor-date")
+    public String showDoctorTimeFields(ChooseDoctorDateRequest doctorAppointment,
+                                       Model model) {
+        List<LocalTime> freeTimeFields = doctorAppointmentService.findFreeTimeFields(doctorAppointment.getDoctorId(), doctorAppointment.getAppointmentDate());
+        model.addAttribute("doctorDate", doctorAppointment);
+
+        if (freeTimeFields.size() == 0) {
+            model.addAttribute("error", "No free time field for this doctor");
+            model.addAttribute("doctors", doctorService.findAll());
+            model.addAttribute("specialities", doctorService.getAllSpecialities());
+            model.addAttribute("minDate", LocalDate.now());
+            return "doctor_appointments/choose_doctor_date";
+        }
+
+        Doctor doctor = doctorService.findById(doctorAppointment.getDoctorId()).get();
+        model.addAttribute("freeTimeFields", freeTimeFields);
+        model.addAttribute("doctorAppointment", new CreateDoctorAppointmentRequest());
+        model.addAttribute("mesServices", doctor.getMedServices());
         return "doctor_appointments/add";
     }
 
     @PostMapping("/add")
-    public String addDoctorAppointment(DoctorAppointmentDto doctorAppointment) {
-        doctorAppointmentService.save(doctorAppointment);
-        return "redirect:/doctor_appointments";
+    public String addDoctorAppointment(CreateDoctorAppointmentRequest doctorAppointment, Model model) {
+        ChooseDoctorDateRequest doctorDate = (ChooseDoctorDateRequest) model.getAttribute("doctorDate");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Consumer consumer = (Consumer) authentication.getPrincipal();
+        Doctor doctor = doctorService.findById(doctorDate.getDoctorId()).get();
+        LocalDateTime dateTime = LocalDateTime.of(doctorDate.getAppointmentDate(), doctorAppointment.getTime());
+        MedService medService = medServiceRepository.findById(doctorDate.getDoctorId()).get();
+
+        doctorAppointmentService.save(new DoctorAppointment(
+                consumer,
+                doctor,
+                dateTime,
+                doctorAppointment.getComment(),
+                medService.getPrice()
+        ));
+        return "redirect:/doctor_appointments/consumer";
     }
 
     @GetMapping("/edit/{id}")

@@ -29,8 +29,8 @@
     <tbody>
     <tr th:each="appointment : ${doctorAppointment}">
       <td th:text="${appointment.doctor.first_name + ' ' + appointment.doctor.last_name + ' ' +appointment.doctor.patronymic}"></td>
-      <td th:text="${#temporals.format(appointment.date_time, 'dd/MM/yyyy')}"></td>
-      <td th:text="${#temporals.format(appointment.date_time, 'HH:mm')}"></td>
+      <td th:text="${#temporals.format(appointment.getDate(), 'dd/MM/yyyy')}"></td>
+      <td th:text="${#temporals.format(appointment.getTime(), 'HH:mm')}"></td>
       <td th:text="${appointment.comment}"></td>
       <td th:text="${appointment.price}"></td>
       <td>

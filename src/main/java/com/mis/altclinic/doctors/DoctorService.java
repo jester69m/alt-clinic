@@ -19,4 +19,5 @@ public interface DoctorService {
 
     List<MedService> addMedService(Long id, MedService medService);
 
+    List<String> getAllSpecialities();
 }

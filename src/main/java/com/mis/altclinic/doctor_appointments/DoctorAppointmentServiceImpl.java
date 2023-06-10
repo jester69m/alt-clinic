@@ -1,8 +1,17 @@
 package com.mis.altclinic.doctor_appointments;
 
+import com.mis.altclinic.consumers.Consumer;
+import com.mis.altclinic.doctors.Doctor;
+import com.mis.altclinic.doctors.DoctorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +20,7 @@ import java.util.Optional;
 public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
 
     private final DoctorAppointmentsRepository doctorAppointmentsRepository;
+    private final DoctorService doctorService;
 
     @Override
     public Optional<DoctorAppointment> findById(Long id) {
@@ -32,7 +42,8 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
         DoctorAppointment doctorAppointment = new DoctorAppointment();
         doctorAppointment.setConsumer(doctorAppointmentDto.getConsumer());
         doctorAppointment.setDoctor(doctorAppointmentDto.getDoctor());
-        doctorAppointment.setDate_time(doctorAppointmentDto.getDate_time());
+        doctorAppointment.setDate(doctorAppointmentDto.getDate_time().toLocalDate());
+        doctorAppointment.setTime(doctorAppointmentDto.getDate_time().toLocalTime());
         doctorAppointment.setComment(doctorAppointmentDto.getComment());
         doctorAppointment.setPrice(doctorAppointmentDto.getPrice());
         return doctorAppointmentsRepository.save(doctorAppointment);
@@ -56,11 +67,12 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
     @Override
     public DoctorAppointment update(Long id, DoctorAppointment doctorAppointment) {
         Optional<DoctorAppointment> doctorAppointmentOptional = doctorAppointmentsRepository.findById(id);
-        if(doctorAppointmentOptional.isPresent()){
+        if(doctorAppointmentOptional.isPresent()) {
             DoctorAppointment doctorAppointment1 = doctorAppointmentOptional.get();
             doctorAppointment1.setConsumer(doctorAppointment.getConsumer());
             doctorAppointment1.setDoctor(doctorAppointment.getDoctor());
-            doctorAppointment1.setDate_time(doctorAppointment.getDate_time());
+            doctorAppointment1.setDate(doctorAppointment.getDate());
+            doctorAppointment1.setTime(doctorAppointment.getTime());
             doctorAppointment1.setPrice(doctorAppointment.getPrice());
             return doctorAppointmentsRepository.save(doctorAppointment1);
         }
@@ -70,11 +82,12 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
     @Override
     public DoctorAppointment update(Long id, DoctorAppointmentDto doctorAppointmentDto) {
         Optional<DoctorAppointment> doctorAppointmentOptional = doctorAppointmentsRepository.findById(id);
-        if(doctorAppointmentOptional.isPresent()){
+        if(doctorAppointmentOptional.isPresent()) {
             DoctorAppointment doctorAppointment1 = doctorAppointmentOptional.get();
             doctorAppointment1.setConsumer(doctorAppointmentDto.getConsumer());
             doctorAppointment1.setDoctor(doctorAppointmentDto.getDoctor());
-            doctorAppointment1.setDate_time(doctorAppointmentDto.getDate_time());
+            doctorAppointment1.setDate(doctorAppointmentDto.getDate_time().toLocalDate());
+            doctorAppointment1.setTime(doctorAppointmentDto.getDate_time().toLocalTime());
             doctorAppointment1.setComment(doctorAppointmentDto.getComment());
             doctorAppointment1.setPrice(doctorAppointmentDto.getPrice());
             return doctorAppointmentsRepository.save(doctorAppointment1);
@@ -88,8 +101,57 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
     }
 
     @Override
+    public List<LocalTime> findFreeTimeFields(long doctorId, LocalDate appointmentDate) {
+        List<LocalTime> bookedTimeFields = doctorAppointmentsRepository.findAllByDoctorIdAndDate(doctorId, appointmentDate)
+                .stream()
+                .map(DoctorAppointment::getTime)
+                .toList();
+
+        return getAllTimeFields(doctorId)
+                .stream()
+                .filter(timeField -> !bookedTimeFields.contains(timeField))
+                .toList();
+    }
+
+    @Override
+    public List<Doctor> getAvailableDoctorsForUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Consumer consumer = (Consumer) authentication.getPrincipal();
+        LocalDateTime now = LocalDateTime.now();
+        List<Doctor> unavailableDoctors = doctorAppointmentsRepository.findByConsumer_IdAndDateAfterAndTimeBefore(consumer.getId(), now.toLocalDate(), now.toLocalTime())
+                .stream()
+                .map(DoctorAppointment::getDoctor)
+                .toList();
+        return doctorService.findAll()
+                .stream()
+                .filter(doctor -> !unavailableDoctors.contains(doctor))
+                .toList();
+    }
+
+    @Override
     public List<DoctorAppointment> showForConsumer(Long id) {
         return doctorAppointmentsRepository.findByConsumerId(id);
+    }
+
+
+    private List<LocalTime> getAllTimeFields(long doctorId) {
+        Optional<Doctor> doctor = doctorService.findById(doctorId);
+        List<LocalTime> appointmentTimes = new ArrayList<>();
+        if (doctor.isEmpty())
+            return appointmentTimes;
+
+        LocalTime workDayStartTime = LocalTime.of(9, 0);
+        LocalTime workDayEndTime = LocalTime.of(17, 0);
+        int appointmentDurationMinutes = doctor.get().getMinsOfAppointment();
+
+
+        LocalTime currentTime = workDayStartTime;
+        while (currentTime.plusMinutes(appointmentDurationMinutes).isBefore(workDayEndTime)) {
+            appointmentTimes.add(currentTime);
+            currentTime = currentTime.plusMinutes(appointmentDurationMinutes);
+        }
+
+        return appointmentTimes;
     }
 }
 

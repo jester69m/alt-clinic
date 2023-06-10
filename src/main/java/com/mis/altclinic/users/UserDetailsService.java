@@ -1,14 +1,9 @@
 package com.mis.altclinic.users;
 
-import com.mis.altclinic.consumers.ConsumerRepository;
-import com.mis.altclinic.doctors.DoctorRepository;
-import com.mis.altclinic.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

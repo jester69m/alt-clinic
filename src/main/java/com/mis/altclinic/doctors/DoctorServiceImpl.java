@@ -105,4 +105,9 @@ public class DoctorServiceImpl implements DoctorService {
         save(doctor.get());
         return doctor.get().getMedServices();
     }
+
+    @Override
+    public List<String> getAllSpecialities() {
+        return doctorRepository.findDistinctSpecialities();
+    }
 }
