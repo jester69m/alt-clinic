@@ -31,7 +31,7 @@ public class DoctorController {
     @PostMapping("/add")
     public String addDoctor(@ModelAttribute @RequestBody DoctorDto doctor) {
         doctorService.save(doctor);
-        return "redirect:/doctors   ";
+        return "redirect:/doctors";
     }
 
     @GetMapping("/edit/{id}")

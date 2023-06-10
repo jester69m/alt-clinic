@@ -2,12 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Add Medical Service</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}" />
+
+    <div th:replace="fragments/header :: header-css"></div>
+
 </head>
 <body>
-<div class="menu">
-    <!-- Your button menu code here -->
-</div>
 <div class="content">
     <h2>Add Medical Service</h2>
     <form th:action="@{/medservices/add}" method="post" th:object="${medService}">

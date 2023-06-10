@@ -8,10 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -44,15 +41,15 @@ public class ConsumerController {
     }
 
     @GetMapping("/add")
-    public String addConsumer(Model model) {
+    public String addConsumerForm(Model model) {
         model.addAttribute("consumer", new Consumer());
         return "consumers/add";
     }
 
-    @PostMapping
-    public String addConsumer(Consumer consumer, RedirectAttributes redirectAttributes) {
+    @PostMapping("/add")
+    public String addConsumer(@ModelAttribute @RequestBody Consumer consumer) {
             consumerService.save(consumer);
-        return "redirect:/list";
+        return "redirect:/consumers";
     }
 
 }
