@@ -4,6 +4,7 @@ import com.mis.altclinic.doctor_appointments.DoctorAppointment;
 import com.mis.altclinic.doctor_appointments.DoctorAppointmentRepository;
 import com.mis.altclinic.doctor_appointments.DoctorAppointmentService;
 import com.mis.altclinic.doctors.Doctor;
+import com.mis.altclinic.users.Role;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,6 +43,7 @@ public class ConsumerServiceImpl implements ConsumerService{
     @Override
     public Consumer save(Consumer consumer) {
         log.info("IN ConsumerServiceImpl save {}", consumer);
+        consumer.setRole(Role.ROLE_CONSUMER);
         consumer.setPassword(encoder.encode(consumer.getPassword()));
         return consumerRepository.save(consumer);
     }
