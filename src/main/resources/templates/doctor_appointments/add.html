@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <div th:replace="fragments/header :: header-css"></div>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
 
 </head>
 <body>
@@ -30,7 +31,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="medService">Appointment Time:</label>
+            <label for="medService">Medical Services:</label>
             <select class="form-control" id="medService" name="medService" required th:field="*{medServiceId}">
                 <option th:each="medService : ${mesServices}"
                         th:text="${medService.getName() + ' - ' + medService.getDescription()}"
@@ -44,7 +45,8 @@
         </div>
 
 
-        <button class="btn btn-primary" type="submit">Create Appointment</button>
+        <button class="btn btn-primary" type="submit">Create</button>
+        <a class="btn btn-secondary" th:href="@{/doctor_appointments}">Cancel</a>
     </form>
 </div>
 

@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class Doctor extends User {
     private int minsOfAppointment = 30;
 
     @ManyToMany
+    @Cascade(CascadeType.REMOVE)
     private List<MedService> medServices;
 
 

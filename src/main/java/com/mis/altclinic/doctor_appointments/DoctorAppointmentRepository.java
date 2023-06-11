@@ -9,7 +9,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Repository
-public interface DoctorAppointmentsRepository extends JpaRepository<DoctorAppointment, Long> {
+public interface DoctorAppointmentRepository extends JpaRepository<DoctorAppointment, Long> {
 
     List<DoctorAppointment> findByDoctorId(Long id);
 
@@ -19,4 +19,8 @@ public interface DoctorAppointmentsRepository extends JpaRepository<DoctorAppoin
 
     @Query("select d from DoctorAppointment d WHERE d.consumer.id = ?1 AND d.date >= ?2 AND d.time >= ?3")
     List<DoctorAppointment> findByConsumer_IdAndDateAfterAndTimeBefore(Long id, LocalDate date, LocalTime time);
+
+    List<DoctorAppointment> findAllByDoctorId(Long id);
+
+    List<DoctorAppointment> findAllByConsumerId(Long id);
 }

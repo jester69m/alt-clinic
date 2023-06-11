@@ -23,9 +23,11 @@ public class DoctorAppointment {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "consumer_id")
     private Consumer consumer;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

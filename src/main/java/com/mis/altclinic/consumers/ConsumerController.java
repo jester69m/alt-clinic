@@ -36,7 +36,6 @@ public class ConsumerController {
         long consumerId = consumer.getId();
 
         model.addAttribute("consumer", consumerService.getConsumerById(consumerId).orElseThrow());
-        model.addAttribute("passwordEncoder", passwordEncoder);
         return "consumers/account";
     }
 
@@ -49,6 +48,24 @@ public class ConsumerController {
     @PostMapping("/add")
     public String addConsumer(@ModelAttribute @RequestBody Consumer consumer) {
             consumerService.save(consumer);
+        return "redirect:/consumers";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditConsumerForm(@PathVariable Long id, Model model) {
+        model.addAttribute("consumer", consumerService.getConsumerById(id).get());
+        return "consumers/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editConsumer(@ModelAttribute Consumer consumer) {
+        consumerService.save(consumer);
+        return "redirect:/consumers";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteConsumer(@PathVariable Long id) {
+        consumerService.delete(id);
         return "redirect:/consumers";
     }
 

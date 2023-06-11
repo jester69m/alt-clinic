@@ -1,5 +1,8 @@
 package com.mis.altclinic.doctors;
 
+import com.mis.altclinic.doctor_appointments.DoctorAppointment;
+import com.mis.altclinic.doctor_appointments.DoctorAppointmentRepository;
+import com.mis.altclinic.doctor_appointments.DoctorAppointmentService;
 import com.mis.altclinic.medservices.MedService;
 import com.mis.altclinic.users.Role;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import java.util.Optional;
 public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorRepository doctorRepository;
+    private final DoctorAppointmentRepository doctorAppointmentRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -97,13 +101,27 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public void delete(Long id) {
         log.info("IN DoctorServiceImpl delete {}", id);
+        List<DoctorAppointment> doctorAppointments = doctorAppointmentRepository.findAllByDoctorId(id);
+        for (DoctorAppointment doctorAppointment : doctorAppointments){
+            doctorAppointment.setDoctor(null);
+            doctorAppointment.setConsumer(null);
+            doctorAppointmentRepository.save(doctorAppointment);
+        }
+
+        Doctor doctor = doctorRepository.findById(id).get();
+        doctor.setMedServices(null);
+        doctorRepository.save(doctor);
+
         doctorRepository.deleteById(id);
+        doctorAppointmentRepository.deleteAll(doctorAppointments);
     }
 
     @Override
     public void deleteAll() {
         log.info("IN DoctorServiceImpl deleteAll");
-        doctorRepository.deleteAll();
+        List<Doctor> doctors = findAll();
+        for (Doctor doctor : doctors)
+            delete(doctor.getId());
     }
 
     @Override

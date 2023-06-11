@@ -35,31 +35,6 @@ public class DoctorAppointmentController {
         model.addAttribute("appointments", appointments);
         return "doctor_appointments/list";
     }
-
-    @GetMapping("/doctor")
-    @PreAuthorize("hasRole('ROLE_DOCTOR')")
-    public String showForDoctor(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Doctor doctor = (Doctor) authentication.getPrincipal();
-
-        long id = doctor.getId();
-
-        model.addAttribute("doctorAppointment", doctorAppointmentService.showForDoctor(id));
-        return "doctor_appointments/doctor";
-    }
-
-    @GetMapping("/consumer")
-    @PreAuthorize("hasRole('ROLE_CONSUMER')")
-    public String showForConsumer(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Consumer consumer = (Consumer) authentication.getPrincipal();
-
-        long consumerId = consumer.getId();
-
-        model.addAttribute("doctorAppointment", doctorAppointmentService.showForConsumer(consumerId));
-        return "doctor_appointments/consumer";
-    }
-
     @GetMapping("/add")
     public String showChoseDoctorDateForm(Model model) {
         model.addAttribute("doctors", doctorAppointmentService.getAvailableDoctorsForUser());
@@ -126,4 +101,61 @@ public class DoctorAppointmentController {
         doctorAppointmentService.delete(id);
         return "redirect:/doctor_appointments/list";
     }
+
+
+
+    @GetMapping("/consumer")
+    @PreAuthorize("hasRole('ROLE_CONSUMER')")
+    public String showForConsumer(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Consumer consumer = (Consumer) authentication.getPrincipal();
+
+        long consumerId = consumer.getId();
+
+        model.addAttribute("doctorAppointment", doctorAppointmentService.showForConsumer(consumerId));
+        return "doctor_appointments/consumer";
+    }
+
+    @GetMapping("/consumer/edit/{id}")
+    @PreAuthorize("hasRole('ROLE_CONSUMER')")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        DoctorAppointment doctorAppointment = doctorAppointmentService.findById(id).get();
+        model.addAttribute("doctorAppointment", doctorAppointment);
+        return "redirect:/doctor_appointments/consumer";
+    }
+    @PostMapping("/consumer/edit/{id}")
+    @PreAuthorize("hasRole('ROLE_CONSUMER')")
+    public String editDoctorAppointment(@PathVariable Long id, @ModelAttribute DoctorAppointment doctorAppointment) {
+        doctorAppointmentService.update(id, doctorAppointment);
+        return "redirect:/doctor_appointments/consumer";
+    }
+
+    @GetMapping("/consumer/delete/{id}")
+    @PreAuthorize("hasRole('CONSUMER')")
+    public String deleteDoctorAppointmentForConsumer(@PathVariable Long id) {
+        doctorAppointmentService.delete(id);
+        return "redirect:/doctor_appointments/consumer";
+    }
+
+    @GetMapping("/doctor")
+    @PreAuthorize("hasRole('ROLE_DOCTOR')")
+    public String showForDoctor(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Doctor doctor = (Doctor) authentication.getPrincipal();
+
+        long id = doctor.getId();
+
+        model.addAttribute("doctorAppointment", doctorAppointmentService.showForDoctor(id));
+        return "doctor_appointments/doctor";
+    }
+
+    @GetMapping("/doctor/delete/{id}")
+    @PreAuthorize("hasRole('DOCTOR')")
+    public String deleteDoctorAppointmentForDoctor(@PathVariable Long id) {
+        doctorAppointmentService.delete(id);
+        return "redirect:/doctor_appointments/doctor";
+    }
+
+
+
 }

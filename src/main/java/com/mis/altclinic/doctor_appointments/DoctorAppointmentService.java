@@ -21,6 +21,8 @@ public interface DoctorAppointmentService {
 
     void deleteAll();
 
+    void deleteAll(List<DoctorAppointment> doctorAppointments);
+
     DoctorAppointment update(Long id, DoctorAppointment doctorAppointment);
 
     DoctorAppointment update(Long id, DoctorAppointmentDto doctorAppointmentDto);

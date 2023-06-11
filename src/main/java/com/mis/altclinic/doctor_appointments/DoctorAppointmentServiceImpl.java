@@ -21,25 +21,25 @@ import java.util.Optional;
 @Slf4j
 public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
 
-    private final DoctorAppointmentsRepository doctorAppointmentsRepository;
+    private final DoctorAppointmentRepository doctorAppointmentRepository;
     private final DoctorService doctorService;
 
     @Override
     public Optional<DoctorAppointment> findById(Long id) {
         log.info("IN DoctorAppointmentServiceImpl findById {}", id);
-        return doctorAppointmentsRepository.findById(id);
+        return doctorAppointmentRepository.findById(id);
     }
 
     @Override
     public List<DoctorAppointment> findAll() {
         log.info("IN DoctorAppointmentServiceImpl findAll");
-        return doctorAppointmentsRepository.findAll();
+        return doctorAppointmentRepository.findAll();
     }
 
     @Override
     public DoctorAppointment save(DoctorAppointment doctorAppointment) {
         log.info("IN DoctorAppointmentServiceImpl save {}", doctorAppointment);
-        return doctorAppointmentsRepository.save(doctorAppointment);
+        return doctorAppointmentRepository.save(doctorAppointment);
     }
 
     @Override
@@ -52,31 +52,44 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
         doctorAppointment.setTime(doctorAppointmentDto.getDate_time().toLocalTime());
         doctorAppointment.setComment(doctorAppointmentDto.getComment());
         doctorAppointment.setPrice(doctorAppointmentDto.getPrice());
-        return doctorAppointmentsRepository.save(doctorAppointment);
+        return doctorAppointmentRepository.save(doctorAppointment);
     }
 
     @Override
     public void saveAll(List<DoctorAppointment> doctorAppointments) {
         log.info("IN DoctorAppointmentServiceImpl saveAll {}", doctorAppointments);
-        doctorAppointmentsRepository.saveAll(doctorAppointments);
+        doctorAppointmentRepository.saveAll(doctorAppointments);
     }
 
     @Override
     public void delete(Long id) {
         log.info("IN DoctorAppointmentServiceImpl delete {}", id);
-        doctorAppointmentsRepository.deleteById(id);
+        DoctorAppointment doctorAppointment = doctorAppointmentRepository.findById(id).get();
+        doctorAppointment.setDoctor(null);
+        doctorAppointment.setConsumer(null);
+        doctorAppointmentRepository.save(doctorAppointment);
+
+        doctorAppointmentRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAll(List<DoctorAppointment> doctorAppointments) {
+        log.info("IN DoctorAppointmentServiceImpl deleteAll {}", doctorAppointments);
+        for(DoctorAppointment doctorAppointment : doctorAppointments) {
+            delete(doctorAppointment.getId());
+        }
     }
 
     @Override
     public void deleteAll() {
         log.info("IN DoctorAppointmentServiceImpl deleteAll");
-        doctorAppointmentsRepository.deleteAll();
+        doctorAppointmentRepository.deleteAll();
     }
 
     @Override
     public DoctorAppointment update(Long id, DoctorAppointment doctorAppointment) {
         log.info("IN DoctorAppointmentServiceImpl update {}", doctorAppointment);
-        Optional<DoctorAppointment> doctorAppointmentOptional = doctorAppointmentsRepository.findById(id);
+        Optional<DoctorAppointment> doctorAppointmentOptional = doctorAppointmentRepository.findById(id);
         if(doctorAppointmentOptional.isPresent()) {
             DoctorAppointment doctorAppointment1 = doctorAppointmentOptional.get();
             doctorAppointment1.setConsumer(doctorAppointment.getConsumer());
@@ -84,15 +97,15 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
             doctorAppointment1.setDate(doctorAppointment.getDate());
             doctorAppointment1.setTime(doctorAppointment.getTime());
             doctorAppointment1.setPrice(doctorAppointment.getPrice());
-            return doctorAppointmentsRepository.save(doctorAppointment1);
+            return doctorAppointmentRepository.save(doctorAppointment1);
         }
-        return doctorAppointmentsRepository.save(doctorAppointment);
+        return doctorAppointmentRepository.save(doctorAppointment);
     }
 
     @Override
     public DoctorAppointment update(Long id, DoctorAppointmentDto doctorAppointmentDto) {
         log.info("IN DoctorAppointmentServiceImpl update {}", doctorAppointmentDto);
-        Optional<DoctorAppointment> doctorAppointmentOptional = doctorAppointmentsRepository.findById(id);
+        Optional<DoctorAppointment> doctorAppointmentOptional = doctorAppointmentRepository.findById(id);
         if(doctorAppointmentOptional.isPresent()) {
             DoctorAppointment doctorAppointment1 = doctorAppointmentOptional.get();
             doctorAppointment1.setConsumer(doctorAppointmentDto.getConsumer());
@@ -101,7 +114,7 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
             doctorAppointment1.setTime(doctorAppointmentDto.getDate_time().toLocalTime());
             doctorAppointment1.setComment(doctorAppointmentDto.getComment());
             doctorAppointment1.setPrice(doctorAppointmentDto.getPrice());
-            return doctorAppointmentsRepository.save(doctorAppointment1);
+            return doctorAppointmentRepository.save(doctorAppointment1);
         }
         return save(doctorAppointmentDto);
     }
@@ -109,12 +122,12 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
     @Override
     public List<DoctorAppointment> showForDoctor(Long id) {
         log.info("IN DoctorAppointmentServiceImpl showForDoctor {}", id);
-        return doctorAppointmentsRepository.findByDoctorId(id);
+        return doctorAppointmentRepository.findByDoctorId(id);
     }
 
     @Override
     public List<LocalTime> findFreeTimeFields(long doctorId, LocalDate appointmentDate) {
-        List<LocalTime> bookedTimeFields = doctorAppointmentsRepository.findAllByDoctorIdAndDate(doctorId, appointmentDate)
+        List<LocalTime> bookedTimeFields = doctorAppointmentRepository.findAllByDoctorIdAndDate(doctorId, appointmentDate)
                 .stream()
                 .map(DoctorAppointment::getTime)
                 .toList();
@@ -130,7 +143,7 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Consumer consumer = (Consumer) authentication.getPrincipal();
         LocalDateTime now = LocalDateTime.now();
-        List<Doctor> unavailableDoctors = doctorAppointmentsRepository.findByConsumer_IdAndDateAfterAndTimeBefore(consumer.getId(), now.toLocalDate(), now.toLocalTime())
+        List<Doctor> unavailableDoctors = doctorAppointmentRepository.findByConsumer_IdAndDateAfterAndTimeBefore(consumer.getId(), now.toLocalDate(), now.toLocalTime())
                 .stream()
                 .map(DoctorAppointment::getDoctor)
                 .toList();
@@ -143,7 +156,7 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
     @Override
     public List<DoctorAppointment> showForConsumer(Long id) {
         log.info("IN DoctorAppointmentServiceImpl showForConsumer {}", id);
-        return doctorAppointmentsRepository.findByConsumerId(id);
+        return doctorAppointmentRepository.findByConsumerId(id);
     }
 
 

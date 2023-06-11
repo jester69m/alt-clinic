@@ -1,5 +1,9 @@
 package com.mis.altclinic.consumers;
 
+import com.mis.altclinic.doctor_appointments.DoctorAppointment;
+import com.mis.altclinic.doctor_appointments.DoctorAppointmentRepository;
+import com.mis.altclinic.doctor_appointments.DoctorAppointmentService;
+import com.mis.altclinic.doctors.Doctor;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +21,7 @@ import java.util.Optional;
 public class ConsumerServiceImpl implements ConsumerService{
 
     private final ConsumerRepository consumerRepository;
+    private final DoctorAppointmentRepository doctorAppointmentRepository;
     private final PasswordEncoder encoder;
     private final static String USER_NOT_FOUND =
             "user with email %s not found";
@@ -52,13 +57,22 @@ public class ConsumerServiceImpl implements ConsumerService{
     @Override
     public void delete(Long id) {
         log.info("IN ConsumerServiceImpl delete {}", id);
+        List<DoctorAppointment> doctorAppointments = doctorAppointmentRepository.findAllByConsumerId(id);
+        for (DoctorAppointment doctorAppointment : doctorAppointments){
+            doctorAppointment.setDoctor(null);
+            doctorAppointment.setConsumer(null);
+            doctorAppointmentRepository.save(doctorAppointment);
+        }
         consumerRepository.deleteById(id);
+        doctorAppointmentRepository.deleteAll(doctorAppointments);
     }
 
     @Override
     public void deleteAll(){
         log.info("IN ConsumerServiceImpl deleteAll");
-        consumerRepository.deleteAll();
+        List<Consumer> consumers = consumerRepository.findAll();
+        for(Consumer consumer : consumers)
+            delete(consumer.getId());
     }
 
     @Override

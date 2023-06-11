@@ -30,9 +30,22 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home","/doctors", "/medservices").permitAll()
-                        .requestMatchers("/login", "/register").permitAll()
-                        .requestMatchers("/doctors/**", "/medservices/**", "/doctor_appointment/**","/consumers/**").permitAll()//TODO: change to ROLE when end configuration
+                        .requestMatchers(
+                                "/", "/home","/doctors", "/medservices",
+                                "/login", "register", "/register/**"
+                        ).permitAll()
+                        .requestMatchers(
+                                "/consumers/info", "doctor_appointments/consumer/**"
+                        ).hasRole("CONSUMER")
+                        .requestMatchers(
+                                "doctor_appointments/doctor/**"
+                        ).hasRole("DOCTOR")
+                        .requestMatchers(
+                                "/consumers","/consumers/add","/consumers/edit/**", "consumers/delete/**",
+                                "/medservices/add","/medservices/edit/**", "medservices/delete/**",
+                                "/doctors/add","/doctors/edit/**", "doctors/delete/**"
+                        ).hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.defaultSuccessUrl("/",true))

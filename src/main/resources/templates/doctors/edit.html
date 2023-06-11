@@ -59,8 +59,8 @@
                 <option th:each="medService : ${medServices}" th:value="${medService.id}" th:text="${medService.name}"></option>
             </select>
         </div>
-        <button class="btn btn-primary" type="submit">Update Doctor</button>
-        <a class="btn btn-secondary" th:href="@{/employees}">Cancel</a>
+        <button class="btn btn-primary" type="submit">Update</button>
+        <a class="btn btn-secondary" th:href="@{/doctors}">Cancel</a>
     </form>
 </div>
 </body>
