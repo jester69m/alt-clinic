@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Doctor Appointments</title>
+  <title>Мої записи</title>
 
   <link rel="stylesheet" th:href="@{/css/main.css}"/>
   <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
@@ -14,21 +14,23 @@
 <div th:replace="~{fragments/header :: menu}"></div>
 
 <div class="container">
-  <h1>Doctor Appointments</h1>
+  <h1>Мої записи</h1>
   <a class="btn btn-primary mb-3" th:href="@{/doctor_appointments/add}">Register New</a>
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Doctor</th>
-      <th>Date</th>
-      <th>Time</th>
-      <th>Comment</th>
-      <th>Price</th>
+      <th>Лікар</th>
+      <th>Спеціальність</th>
+      <th>Дата</th>
+      <th>Час</th>
+      <th>Коментар</th>
+      <th>Ціна</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="appointment : ${doctorAppointment}">
       <td th:text="${appointment.doctor.first_name + ' ' + appointment.doctor.last_name + ' ' +appointment.doctor.patronymic}"></td>
+      <td th:text="${appointment.doctor.specialty}"></td>
       <td th:text="${#temporals.format(appointment.getDate(), 'dd/MM/yyyy')}"></td>
       <td th:text="${#temporals.format(appointment.getTime(), 'HH:mm')}"></td>
       <td th:text="${appointment.comment}"></td>

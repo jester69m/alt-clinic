@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Medical Services</title>
+    <title>Медичні послуги</title>
 
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
@@ -12,17 +12,17 @@
 <div th:replace="~{fragments/header :: menu}"></div>
 
 <div class="container">
-    <h1>Med Services</h1>
+    <h1>Медичні послуги</h1>
     <a
             th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-            class="btn btn-primary mb-3" th:href="@{/medservices/add}">Add New Med Service</a>
+            class="btn btn-primary mb-3" th:href="@{/medservices/add}">Додати нову послугу</a>
     <table class="table table-striped">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
+            <th>Назва</th>
+            <th>Опис</th>
+            <th>Ціна</th>
         </tr>
         </thead>
         <tbody>

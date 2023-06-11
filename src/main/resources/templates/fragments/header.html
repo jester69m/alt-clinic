@@ -42,21 +42,21 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/}">Home</a>
+            <a class="nav-link" th:href="@{/}">Головна</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/doctors}">Doctors</a>
+            <a class="nav-link" th:href="@{/doctors}">Лікарі</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/medservices}">MedServices</a>
+            <a class="nav-link" th:href="@{/medservices}">Послуги</a>
           </li>
           <li class="nav-item">
             <a
                     th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-                    class="nav-link" th:href="@{/consumers}">Consumers</a>
+                    class="nav-link" th:href="@{/consumers}">Користувачі</a>
             <a
                     th:if="${#authorization.expression('hasAuthority(''ROLE_CONSUMER'')')}"
-                    class="nav-link" th:href="@{/consumers/info}">Account</a>
+                    class="nav-link" th:href="@{/consumers/info}">Моя сторінка</a>
 
           </li>
           <li class="nav-item">
@@ -65,7 +65,7 @@
                     class="nav-link" th:href="@{/doctor_appointments}">Doctor Appointments</a>
             <a
                     th:if="${#authorization.expression('hasAuthority(''ROLE_CONSUMER'')')}"
-                    class="nav-link" th:href="@{/doctor_appointments/consumer}">My Appointments</a>
+                    class="nav-link" th:href="@{/doctor_appointments/consumer}">Мої записи</a>
           </li>
         </ul>
 <!--        <ul class="navbar-nav ml-auto">-->

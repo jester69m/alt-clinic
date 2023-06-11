@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Новий запис</title>
 
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
@@ -16,7 +16,7 @@
 <div class="container">
 
 
-    <h2>Create Doctor Appointment</h2>
+    <h2>Створити новий запис</h2>
 
     <!-- Check for error attribute and display error message if present -->
     <div class="alert alert-danger" th:if="${error}">
@@ -25,27 +25,27 @@
 
     <form action="/doctor_appointments/add" method="post" th:object="${doctorAppointment}">
         <div class="form-group">
-            <label for="appointmentTime">Appointment Time:</label>
+            <label for="appointmentTime">Час запису:</label>
             <select class="form-control" id="appointmentTime" name="appointmentTime" required th:field="*{time}">
                 <option th:each="time : ${freeTimeFields}" th:text="${time}" th:value="${time}"></option>
             </select>
         </div>
         <div class="form-group">
-            <label for="medService">Appointment Time:</label>
+            <label for="medService">Час запису:</label>
             <select class="form-control" id="medService" name="medService" required th:field="*{medServiceId}">
                 <option th:each="medService : ${mesServices}"
-                        th:text="${medService.getName() + ' - ' + medService.getDescription()}"
+                        th:text="${medService.getDescription()}"
                         th:value="${medService.getId()}"></option>
             </select>
         </div>
         <div class="form-group">
-            <label for="comment">Appointment Comment:</label>
+            <label for="comment">Коментар пацієнта:</label>
             <input class="form-control form-text" id="comment" placeholder="Leave some comment" th:field="*{comment}"
                    type="text">
         </div>
 
 
-        <button class="btn btn-primary" type="submit">Create Appointment</button>
+        <button class="btn btn-primary" type="submit">Створити запис</button>
     </form>
 </div>
 

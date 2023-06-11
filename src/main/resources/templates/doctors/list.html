@@ -4,7 +4,7 @@
 >
 
 <head>
-    <title>Doctors</title>
+    <title>Лікарі</title>
 
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
@@ -22,7 +22,7 @@
 <div th:replace="~{fragments/header :: menu}"></div>
 
 <div class="container">
-    <h1>Doctors</h1>
+    <h1>Лікарі</h1>
     <a
             th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
             class="btn btn-primary mb-3" th:href="@{/doctors/add}">Add New Doctor</a>
@@ -30,13 +30,13 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>PIB</th>
-            <th>Contact</th>
-            <th>Age</th>
-            <th>Specialty</th>
-            <th>Education</th>
-            <th>Experience</th>
-            <th>Medical Services</th>
+            <th>ПІБ</th>
+            <th>Зв'язок</th>
+            <th>Вік</th>
+            <th>Спеціальність</th>
+            <th>Освіта</th>
+            <th>Досвід</th>
+            <th>Послуги</th>
         </tr>
         </thead>
         <tbody>
