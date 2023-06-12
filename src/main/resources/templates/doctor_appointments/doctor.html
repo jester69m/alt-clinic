@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Doctor Appointments</title>
+  <title>Мої Записи</title>
 
   <link rel="stylesheet" th:href="@{/css/main.css}"/>
   <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
@@ -13,16 +13,16 @@
 <div th:replace="~{fragments/header :: menu}"></div>
 
 <div class="container">
-  <h1>My Appointments</h1>
+  <h1>Електронні записи</h1>
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Consumer</th>
-      <th>Email</th>
-      <th>Date</th>
-      <th>Time</th>
-      <th>Comment</th>
-      <th>Price</th>
+      <th>Пацієнт</th>
+      <th>Електронна пошта</th>
+      <th>Дата</th>
+      <th>Час</th>
+      <th>Коментар</th>
+      <th>Ціна</th>
     </tr>
     </thead>
     <tbody>

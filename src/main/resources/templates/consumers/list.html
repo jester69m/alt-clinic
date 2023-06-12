@@ -22,31 +22,31 @@
   <h1>Consumers</h1>
   <a class="btn btn-primary mb-3" th:href="@{/consumers/add}">Add New Consumer</a>
   <div class="table-container">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>PIB</th>
-      <th>Contact</th>
-      <th>Address</th>
-      <th>Age</th>
-      <th>Blood type</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="consumer : ${consumers}">
-      <td th:text="${consumer.first_name + ' ' +consumer.last_name + ' ' + consumer.patronymic}"></td>
-      <td th:text="${consumer.email + ' ' + consumer.phone_number}"></td>
-      <td th:text="${consumer.address}"></td>
-      <td th:text="${consumer.age}"></td>
-      <td th:text="${consumer.blood_type}"></td>
-      <td>
-        <a class="btn btn-info" th:href="@{/consumers/edit/{id}(id=${consumer.id})}">Edit</a>
-        <a class="btn btn-danger" th:href="@{/consumers/delete/{id}(id=${consumer.id})}">Delete</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>PIB</th>
+        <th>Contact</th>
+        <th>Address</th>
+        <th>Age</th>
+        <th>Blood type</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="consumer : ${consumers}">
+        <td th:text="${consumer.first_name + ' ' +consumer.last_name + ' ' + consumer.patronymic}"></td>
+        <td th:text="${consumer.email + ' ' + consumer.phone_number}"></td>
+        <td th:text="${consumer.address}"></td>
+        <td th:text="${consumer.age}"></td>
+        <td th:text="${consumer.blood_type}"></td>
+        <td>
+          <a class="btn btn-info" th:href="@{/consumers/edit/{id}(id=${consumer.id})}">Edit</a>
+          <a class="btn btn-danger" th:href="@{/consumers/delete/{id}(id=${consumer.id})}">Delete</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 
   <div th:replace="~{fragments/footer :: footer}"></div>

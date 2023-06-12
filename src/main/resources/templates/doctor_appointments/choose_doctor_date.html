@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Doctor Appointment Form</title>
+    <title>Електронний запис</title>
 
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
@@ -14,7 +14,7 @@
 <div class="container">
 
 
-    <h1>Doctor Appointment</h1>
+    <h1>Електронний запис</h1>
 
     <!-- Check for error attribute and display error message if present -->
     <div class="alert alert-danger" th:if="${error}">
@@ -23,7 +23,7 @@
 
     <form action="/doctor_appointments/choose-doctor-date" method="POST" th:object="${doctorDate}">
         <div class="form-group">
-            <label for="speciality">Choose a specialty:</label>
+            <label for="speciality">Спеціальність:</label>
             <select class="form-control" id="speciality" name="speciality" onchange="updateDoctorList(this.value)">
                 <option value="">-- Select Specialty --</option>
                 <option th:each="speciality : ${specialities}" th:text="${speciality}"
@@ -32,14 +32,14 @@
         </div>
         <br>
         <div class="form-group">
-            <label for="doctor">Choose a doctor:</label>
+            <label for="doctor">Лікар:</label>
             <select class="form-control" id="doctor" name="doctor" th:field="*{doctorId}">
                 <option value="">-- Select Doctor --</option>
             </select>
         </div>
         <br>
         <div class="form-group">
-            <label for="appointmentDate">Choose an appointment date (must be in the future):</label>
+            <label for="appointmentDate">Дату:</label>
             <input class="form-control" id="appointmentDate" name="appointmentDate" th:field="*{appointmentDate}"
                    th:min="${minDate}" type="date">
         </div>

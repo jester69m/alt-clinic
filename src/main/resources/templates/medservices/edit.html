@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Edit MedService</title>
+  <title>Редагування медичної послуги</title>
 
   <div th:replace="fragments/header :: header-css"></div>
 
@@ -10,14 +10,14 @@
 <body>
 
 <div class="container">
-  <h1>Edit MedService</h1>
+  <h1>Відредагуйте медичну послугу</h1>
   <form method="post" th:action="@{/medservices/edit/{id}(id=${medService.id})}"  th:object="${medService}">
     <div class="form-group">
-      <label for="name">Name:</label>
+      <label for="name">Назва:</label>
       <input class="form-control" id="name" required th:field="*{name}" type="text">
     </div>
     <div class="form-group">
-      <label for="description">Description:</label>
+      <label for="description">Опис:</label>
       <input class="form-control" id="description" required th:field="*{description}" type="text">
     </div>
     <div class="form-group">
@@ -25,8 +25,8 @@
       <input class="form-control" id="price" required th:field="*{price}" type="number">
     </div>
     <br>
-    <button class="btn btn-primary" type="submit">Update</button>
-    <a class="btn btn-secondary" th:href="@{/medservices}">Cancel</a>
+    <button class="btn btn-primary" type="submit">Оновити</button>
+    <a class="btn btn-secondary" th:href="@{/medservices}">Скасувати</a>
   </form>
 </div>
 </body>
