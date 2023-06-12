@@ -6,72 +6,91 @@
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
 
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+
 </head>
 <body>
-<h3>Крок 2:</h3>
-<h2>Введіть свої дані</h2>
-<form th:action="@{/register/consumer}" method="post" th:object="${consumer}">
-    <div>
-        <label>Ім'я:</label>
-        <label>
-            <input type="text" th:field="*{first_name}" />
-        </label>
-    </div>
-    <div>
-        <label>Прізвище:</label>
-        <label>
-            <input type="text" th:field="*{last_name}" />
-        </label>
-    </div>
+<div class="form-container">
+    <h3>Крок 2:</h3>
+    <h2>Введіть свої дані</h2>
+    <form th:action="@{/register/consumer}" method="post" th:object="${consumer}">
+        <div>
+            <label>Ім'я:</label>
+            <label>
+                <input type="text" th:field="*{first_name}" />
+            </label>
+        </div>
+        <div>
+            <label>Прізвище:</label>
+            <label>
+                <input type="text" th:field="*{last_name}" />
+            </label>
+        </div>
 
-    <div>
-        <label>По-батькові:</label>
-        <label>
-            <input type="text" th:field="*{patronymic}" />
-        </label>
-    </div>
-    <div>
-        <label>Електронна пошта</label>
-        <label>
-            <input type="email" th:field="*{email}" />
-        </label>
-    </div>
-    <div>
-        <label>Пароль:</label>
-        <label>
-            <input type="password" th:field="*{password}" />
-        </label>
-    </div>
+        <div>
+            <label>По-батькові:</label>
+            <label>
+                <input type="text" th:field="*{patronymic}" />
+            </label>
+        </div>
+        <div>
+            <label>Електронна пошта</label>
+            <label>
+                <input type="email" th:field="*{email}" />
+            </label>
+        </div>
+        <div>
+            <label>Пароль:</label>
+            <label>
+                <input type="password" th:field="*{password}" />
+            </label>
+        </div>
 
-    <div>
-        <label>Номер телефону:</label>
-        <label>
-            <input type="text" th:field="*{phone_number}" />
-        </label>
-    </div>
-    <div>
-        <label>Адреса:</label>
-        <label>
-            <input type="text" th:field="*{address}" />
-        </label>
-    </div>
-    <div>
-        <label>Вік:</label>
-        <label>
-            <input type="number" th:field="*{age}" />
-        </label>
-    </div>
-    <div>
-        <label>Група крові:</label>
-        <label>
-            <input type="text" th:field="*{blood_type}" />
-        </label>
-    </div>
-    <div>
-        <button class="btn btn-primary" type="submit">Create</button>
-        <a class="btn btn-secondary" th:href="@{/register}">Cancel</a>
-    </div>
-</form>
+        <div>
+            <label>Номер телефону:</label>
+            <label>
+                <input type="text" th:field="*{phone_number}" />
+            </label>
+        </div>
+        <div>
+            <label>Адреса:</label>
+            <label>
+                <input type="text" th:field="*{address}" />
+            </label>
+        </div>
+        <div>
+            <label>Вік:</label>
+            <label>
+                <input type="number" th:field="*{age}" />
+            </label>
+        </div>
+        <div>
+            <label>Група крові:</label>
+            <label>
+                <input type="text" th:field="*{blood_type}" />
+            </label>
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit">Create</button>
+            <a class="btn btn-secondary" th:href="@{/register}">Cancel</a>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>

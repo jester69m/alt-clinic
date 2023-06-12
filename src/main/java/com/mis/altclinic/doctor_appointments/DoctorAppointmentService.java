@@ -1,5 +1,6 @@
 package com.mis.altclinic.doctor_appointments;
 
+import com.mis.altclinic.consumers.Consumer;
 import com.mis.altclinic.doctors.Doctor;
 
 import java.time.LocalDate;
@@ -34,4 +35,7 @@ public interface DoctorAppointmentService {
     List<LocalTime> findFreeTimeFields(long doctorId, LocalDate appointmentDate);
 
     List<Doctor> getAvailableDoctorsForUser();
+
+    boolean existsByConsumerIdAndDoctorId(Long consumerId, Long doctorId);
+
 }

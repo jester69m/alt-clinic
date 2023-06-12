@@ -180,8 +180,8 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
         return appointmentTimes;
     }
 
-    public boolean hasExistingAppointment(Consumer consumer, Long doctorId) {
-        return doctorAppointmentRepository.existsByConsumerAndDoctorId(consumer, doctorId);
+    public boolean existsByConsumerIdAndDoctorId(Long consumerId, Long doctorId) {
+        return doctorAppointmentRepository.existsByConsumerIdAndDoctorId(consumerId, doctorId);
     }
 }
 

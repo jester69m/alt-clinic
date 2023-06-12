@@ -48,6 +48,14 @@ public class DoctorAppointmentController {
     @PostMapping("/choose-doctor-date")
     public String showDoctorTimeFields(ChooseDoctorDateRequest doctorAppointment,
                                        Model model) {
+        if (doctorAppointment.getDoctorId() == null) {
+            model.addAttribute("error", "Please select a doctor");
+            model.addAttribute("doctors", doctorService.findAll());
+            model.addAttribute("specialities", doctorService.getAllSpecialities());
+            model.addAttribute("minDate", LocalDate.now());
+            return "doctor_appointments/choose_doctor_date";
+        }
+
         List<LocalTime> freeTimeFields = doctorAppointmentService.findFreeTimeFields(doctorAppointment.getDoctorId(), doctorAppointment.getAppointmentDate());
         model.addAttribute("doctorDate", doctorAppointment);
 
@@ -74,6 +82,18 @@ public class DoctorAppointmentController {
         Doctor doctor = doctorService.findById(doctorDate.getDoctorId()).get();
         LocalDateTime dateTime = LocalDateTime.of(doctorDate.getAppointmentDate(), doctorAppointment.getTime());
         MedService medService = medServiceRepository.findById(doctorDate.getDoctorId()).get();
+
+        // Check if the consumer already has an appointment with the selected doctor
+        boolean hasExistingAppointment = doctorAppointmentService.existsByConsumerIdAndDoctorId(consumer.getId(), doctor.getId());
+
+        if (hasExistingAppointment) {
+            model.addAttribute("error", "You already have an appointment with this doctor");
+            model.addAttribute("doctors", doctorAppointmentService.getAvailableDoctorsForUser());
+            model.addAttribute("specialities", doctorService.getAllSpecialities());
+            model.addAttribute("minDate", LocalDate.now());
+            model.addAttribute("doctorDate", doctorDate);
+            return "doctor_appointments/choose_doctor_date";
+        }
 
         doctorAppointmentService.save(new DoctorAppointment(
                 consumer,

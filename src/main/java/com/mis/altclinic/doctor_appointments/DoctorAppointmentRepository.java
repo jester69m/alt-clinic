@@ -25,5 +25,5 @@ public interface DoctorAppointmentRepository extends JpaRepository<DoctorAppoint
 
     List<DoctorAppointment> findAllByConsumerId(Long id);
 
-    boolean existsByConsumerAndDoctorId(Consumer consumer, Long doctorId);
+    boolean existsByConsumerIdAndDoctorId(Long consumerId, Long doctorId);
 }
