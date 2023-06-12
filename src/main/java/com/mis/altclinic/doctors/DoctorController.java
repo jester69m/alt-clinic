@@ -35,14 +35,14 @@ public class DoctorController {
 
     @GetMapping("/edit/{id}")
     public String showEditDoctorForm(@PathVariable Long id, Model model) {
-        model.addAttribute("doctor", doctorService.findById(id).get());
+        model.addAttribute("doctor", doctorService.findById(id).orElseThrow());
         model.addAttribute("medServices", medService.findAll());
         return "doctors/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String editDoctor(@ModelAttribute("doctor") DoctorDto doctor, @PathVariable Long id) {
-        Doctor d1 = doctorService.update(id, doctor);;
+        doctorService.update(id, doctor);
         return "redirect:/doctors";
     }
 

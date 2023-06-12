@@ -22,10 +22,10 @@
 <div th:replace="~{fragments/header :: menu}"></div>
 
 <div class="container">
-    <h1>Doctors</h1>
+    <h1>Лікарі</h1>
     <a
             th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-            class="btn btn-primary mb-3" th:href="@{/doctors/add}">Add New Doctor</a>
+            class="btn btn-primary mb-3" th:href="@{/doctors/add}">Додати лікаря</a>
     <div class="table-container">
         <table class="table table-striped">
             <thead>
@@ -58,10 +58,10 @@
                     <a
 
                             th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-                            class="btn btn-info" th:href="@{/doctors/edit/{id}(id=${doctor.id})}">Edit</a>
+                            class="btn btn-info" th:href="@{/doctors/edit/{id}(id=${doctor.id})}">Редагувати</a>
                     <a
                             th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-                            class="btn btn-danger" th:href="@{/doctors/delete/{id}(id=${doctor.id})}">Delete</a>
+                            class="btn btn-danger" th:href="@{/doctors/delete/{id}(id=${doctor.id})}">Видалити</a>
                 </td>
             </tr>
             </tbody>

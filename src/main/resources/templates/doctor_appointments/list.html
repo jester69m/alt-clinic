@@ -36,7 +36,7 @@
             <td th:text="${appointment.price}"></td>
             <td>
                 <a class="btn btn-info" th:href="@{/doctor_appointments/edit/{id}(id=${appointment.id})}">Edit</a>
-                <a class="btn btn-danger" th:href="@{/doctor_appointments/edit/{id}(id=${appointment.id})}">Delete</a>
+                <a class="btn btn-danger" th:href="@{/doctor_appointments/delete/{id}(id=${appointment.id})}">Delete</a>
             </td>
         </tr>
         </tbody>

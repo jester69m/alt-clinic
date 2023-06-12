@@ -1,22 +1,16 @@
 package com.mis.altclinic.config;
 
-import com.mis.altclinic.users.Role;
-import com.mis.altclinic.users.User;
 import com.mis.altclinic.users.UserDetailsService;
-import com.mis.altclinic.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -30,8 +24,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/doctor_appointments","/consumers", "/consumers/add", "/consumers/edit/**", "consumers/delete/**").denyAll()
                         .requestMatchers(
-                                "/", "/home","/doctors", "/medservices",
+                                "/", "/home", "/doctors", "/medservices",
                                 "/login", "register", "/register/**"
                         ).permitAll()
                         .requestMatchers(
@@ -41,14 +36,13 @@ public class SecurityConfiguration {
                                 "doctor_appointments/doctor/**"
                         ).hasRole("DOCTOR")
                         .requestMatchers(
-                                "/consumers","/consumers/add","/consumers/edit/**", "consumers/delete/**",
-                                "/medservices/add","/medservices/edit/**", "medservices/delete/**",
-                                "/doctors/add","/doctors/edit/**", "doctors/delete/**"
+                                "/medservices/add", "/medservices/edit/**", "medservices/delete/**",
+                                "/doctors/add", "/doctors/edit/**", "doctors/delete/**"
                         ).hasRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )
-                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.defaultSuccessUrl("/",true))
+                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.defaultSuccessUrl("/", true))
                 .logout(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable);
 

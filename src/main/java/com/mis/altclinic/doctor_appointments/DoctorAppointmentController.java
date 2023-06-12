@@ -67,7 +67,7 @@ public class DoctorAppointmentController {
             return "doctor_appointments/choose_doctor_date";
         }
 
-        Doctor doctor = doctorService.findById(doctorAppointment.getDoctorId()).get();
+        Doctor doctor = doctorService.findById(doctorAppointment.getDoctorId()).orElseThrow();
         model.addAttribute("freeTimeFields", freeTimeFields);
         model.addAttribute("doctorAppointment", new CreateDoctorAppointmentRequest());
         model.addAttribute("mesServices", doctor.getMedServices());
@@ -79,9 +79,9 @@ public class DoctorAppointmentController {
         ChooseDoctorDateRequest doctorDate = (ChooseDoctorDateRequest) model.getAttribute("doctorDate");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Consumer consumer = (Consumer) authentication.getPrincipal();
-        Doctor doctor = doctorService.findById(doctorDate.getDoctorId()).get();
+        Doctor doctor = doctorService.findById(doctorDate.getDoctorId()).orElseThrow();
         LocalDateTime dateTime = LocalDateTime.of(doctorDate.getAppointmentDate(), doctorAppointment.getTime());
-        MedService medService = medServiceRepository.findById(doctorDate.getDoctorId()).get();
+        MedService medService = medServiceRepository.findById(doctorDate.getDoctorId()).orElseThrow();
 
         // Check if the consumer already has an appointment with the selected doctor
         boolean hasExistingAppointment = doctorAppointmentService.existsByConsumerIdAndDoctorId(consumer.getId(), doctor.getId());
@@ -105,11 +105,11 @@ public class DoctorAppointmentController {
         return "redirect:/doctor_appointments/consumer";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditDoctorAppointmentForm(Long id, Model model) {
-        model.addAttribute("doctorAppointment", doctorAppointmentService.findById(id).get());
-        return "doctor_appointments/edit";
-    }
+//    @GetMapping("/edit/{id}")
+//    public String showEditDoctorAppointmentForm(Long id, Model model) {
+//        model.addAttribute("doctorAppointment", doctorAppointmentService.findById(id).get());
+//        return "doctor_appointments/edit";
+//    }
 
     @PostMapping("/edit/{id}")
     public String editDoctorAppointment(DoctorAppointmentDto doctorAppointment, @PathVariable Long id) {
@@ -140,7 +140,7 @@ public class DoctorAppointmentController {
     @GetMapping("/consumer/edit/{id}")
     @PreAuthorize("hasRole('ROLE_CONSUMER')")
     public String showEditForm(@PathVariable Long id, Model model) {
-        DoctorAppointment doctorAppointment = doctorAppointmentService.findById(id).get();
+        DoctorAppointment doctorAppointment = doctorAppointmentService.findById(id).orElseThrow();
         model.addAttribute("doctorAppointment", doctorAppointment);
         return "redirect:/doctor_appointments/consumer";
     }

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/medservices")
@@ -25,19 +24,19 @@ public class MedServiceController {
         return "medservices/add";
     }
     @PostMapping("/add")
-    public String addMedService(@ModelAttribute("medService") MedService medService, RedirectAttributes redirectAttributes) {
+    public String addMedService(@ModelAttribute("medService") MedService medService) {
         medServiceService.save(medService);
         return "redirect:/medservices";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(Model model, @PathVariable Long id) {
-        model.addAttribute("medService", medServiceService.findById(id).get());
+        model.addAttribute("medService", medServiceService.findById(id).orElseThrow());
         return "medservices/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String editMedService(@ModelAttribute("medService") MedService medService, RedirectAttributes redirectAttributes) {
+    public String editMedService(@ModelAttribute("medService") MedService medService) {
         medServiceService.save(medService);
         return "redirect:/medservices";
     }

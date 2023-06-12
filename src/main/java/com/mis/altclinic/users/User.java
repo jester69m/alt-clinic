@@ -19,18 +19,18 @@ import java.util.Collections;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User implements UserDetails {
 
-    //    @SequenceGenerator(
-//            name = "consumer_sequence",
-//            sequenceName = "consumer_sequence",
-//            allocationSize = 1
-//    )
-//    @Id
-//    @GeneratedValue(
-//            strategy = GenerationType.SEQUENCE,
-//            generator = "consumer_sequence"
-//    )
+        @SequenceGenerator(
+            name = "consumer_sequence",
+            sequenceName = "consumer_sequence",
+            allocationSize = 1
+    )
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "consumer_sequence"
+    )
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)

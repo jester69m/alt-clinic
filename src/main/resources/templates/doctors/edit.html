@@ -6,10 +6,29 @@
 
     <div th:replace="fragments/header :: header-css"></div>
 
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+    </style>
+
 </head>
 <body>
 
-<div class="container">
+<div class="form-container">
     <h1>Відредагуйте лікаря</h1>
     <form method="post" th:action="@{/doctors/edit/{id}(id=${doctor.id})}"  th:object="${doctor}">
         <div class="form-group">
@@ -54,14 +73,16 @@
             <label for="experience">Стаж:</label>
             <input class="form-control" id="experience" required th:field="*{experience}" type="text">
         </div>
+        <br>
         <div class="form-group">
             <label for="medServices">Послуги:</label>
             <select class="form-control" id="medServices" th:field="*{medServices}" multiple="multiple">
                 <option th:each="medService : ${medServices}" th:value="${medService.id}" th:text="${medService.name}"></option>
             </select>
         </div>
+        <br>
         <button class="btn btn-primary" type="submit">Оновити</button>
-        <a class="btn btn-secondary" th:href="@{/doctors}">Скасувати</a>
+        <a class="btn btn-danger" th:href="@{/doctors}">Скасувати</a>
     </form>
 </div>
 </body>

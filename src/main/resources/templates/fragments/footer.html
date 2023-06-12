@@ -28,9 +28,9 @@
                 <!-- this is footer -->
                 &copy; 2023 alt-clinic.com
                 <span sec:authorize="isAuthenticated()">
-                    | Logged user: <span sec:authentication="name"></span> |
-                    Roles: <span sec:authentication="principal.authorities"></span> |
-                    <a th:href="@{/logout}">Sign Out</a>
+                    | Користувач: <span sec:authentication="name"></span> |
+                    Роль: <span sec:authentication="principal.authorities"></span> |
+                    <a th:href="@{/logout}">Вийти</a>
                 </span>
 
                 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>

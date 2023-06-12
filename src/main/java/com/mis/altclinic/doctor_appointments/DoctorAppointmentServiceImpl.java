@@ -64,7 +64,7 @@ public class DoctorAppointmentServiceImpl implements DoctorAppointmentService {
     @Override
     public void delete(Long id) {
         log.info("IN DoctorAppointmentServiceImpl delete {}", id);
-        DoctorAppointment doctorAppointment = doctorAppointmentRepository.findById(id).get();
+        DoctorAppointment doctorAppointment = doctorAppointmentRepository.findById(id).orElseThrow();
         doctorAppointment.setDoctor(null);
         doctorAppointment.setConsumer(null);
         doctorAppointmentRepository.save(doctorAppointment);

@@ -5,74 +5,72 @@
 
     <div th:replace="fragments/header :: header-css"></div>
 
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+    </style>
+
 </head>
 <body>
-<div class="content">
+<div class="form-container">
     <h2>Додайте лікаря</h2>
     <form th:action="@{/doctors/add}" method="post" th:object="${doctor}">
-        <div>
-            <label>Ім'я:</label>
-            <label>
-                <input type="text" th:field="*{first_name}" />
-            </label>
+        <div class="form-group">
+            <label for="first_name">Ім'я:</label>
+            <input class="form-control" id="first_name" required th:field="*{first_name}" type="text">
         </div>
-        <div>
-            <label>Прізвище:</label>
-            <label>
-                <input type="text" th:field="*{last_name}" />
-            </label>
+        <div class="form-group">
+            <label for="last_name">Прізвище:</label>
+            <input class="form-control" id="last_name" required th:field="*{last_name}" type="text">
         </div>
-        <div>
-            <label>По батькові:</label>
-            <label>
-                <input type="text" th:field="*{patronymic}" />
-            </label>
+        <div class="form-group">
+            <label for="patronymic">По батькові:</label>
+            <input class="form-control" id="patronymic" th:value="*{patronymic}" required th:field="*{patronymic}" type="text">
         </div>
-        <div>
-            <label>Електронна пошта:</label>
-            <label>
-                <input type="text" th:field="*{email}" />
-            </label>
+        <div class="form-group">
+            <label for="email">Електронна пошта:</label>
+            <input class="form-control" id="email" required th:field="*{email}" type="text">
         </div>
-
-        <div>
-            <label>Пароль:</label>
-            <label>
-                <input type="password" th:field="*{password}" />
-            </label>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input class="form-control" id="password" required th:field="*{password}" type="password">
         </div>
-
-        <div>
-            <label>Номер телефону:</label>
-            <label>
-                <input type="text" th:field="*{phone_number}" />
-            </label>
+        <div class="form-group">
+            <label for="phone_number">Номер телефону:</label>
+            <input class="form-control" id="phone_number" required th:field="*{phone_number}" type="text">
         </div>
-        <div>
-            <label>Вік:</label>
-            <label>
-                <input type="number" th:field="*{age}" />
-            </label>
+        <div class="form-group">
+            <label for="age">Вік:</label>
+            <input class="form-control" id="age" required th:field="*{age}" type="number">
         </div>
-        <div>
-            <label>Спеціальність:</label>
-            <label>
-                <input type="text" th:field="*{specialty}" />
-            </label>
+        <div class="form-group">
+            <label for="specialty">Спеціальність:</label>
+            <input class="form-control" id="specialty" required th:field="*{specialty}" type="text">
         </div>
-        <div>
-            <label>Освіта:</label>
-            <label>
-                <input type="text" th:field="*{education}" />
-            </label>
+        <div class="form-group">
+            <label for="education">Освіта:</label>
+            <input class="form-control" id="education" required th:field="*{education}" type="text">
         </div>
-        <div>
-            <label>Стаж:</label>
-            <label>
-                <input type="text" th:field="*{experience}" />
-            </label>
+        <div class="form-group">
+            <label for="experience">Стаж:</label>
+            <input class="form-control" id="experience" required th:field="*{experience}" type="text">
         </div>
-        <div>
+        <br>
+        <div class="form-group">
             <label>Послуги:</label>
             <label>
                 <select multiple th:field="*{medServices}">
@@ -83,9 +81,10 @@
                 </select>
             </label>
         </div>
+        <br>
         <div>
-            <button class="btn btn-primary" type="submit">Create</button>
-            <a class="btn btn-secondary" th:href="@{/doctors}">Cancel</a>
+            <button class="btn btn-primary" type="submit">Додати</button>
+            <a class="btn btn-danger" th:href="@{/doctors}">Скасувати</a>
         </div>
     </form>
 </div>

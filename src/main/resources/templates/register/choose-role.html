@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <title>Choose Role</title>
 
@@ -25,8 +25,8 @@
 </head>
 <body>
 <div class="form-container">
-  <h3>Step 1:</h3>
-  <h2>Choose Role</h2>
+  <h3>Крок 1:</h3>
+  <h2>Виберіть роль</h2>
   <form th:action="@{/register}" method="post">
     <div class="form-group">
 <!--      <div class="form-check">-->
@@ -38,12 +38,12 @@
       <div class="form-check">
         <input class="form-check-input" type="radio" name="role" id="consumer" value="consumer">
         <label class="form-check-label" for="consumer">
-          Consumer
+          Користувач
         </label>
       </div>
     </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
-    <button class="btn btn-secondary" th:href="@{/}">Cancel</button>
+    <button class="btn btn-primary" type="submit">Підтвердити</button>
+    <button class="btn btn-danger" th:href="@{/}">Скасувати</button>
   </form>
 </div>
 </body>

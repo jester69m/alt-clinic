@@ -2,14 +2,9 @@ package com.mis.altclinic.consumers;
 
 import com.mis.altclinic.doctor_appointments.DoctorAppointment;
 import com.mis.altclinic.doctor_appointments.DoctorAppointmentRepository;
-import com.mis.altclinic.doctor_appointments.DoctorAppointmentService;
-import com.mis.altclinic.doctors.Doctor;
 import com.mis.altclinic.users.Role;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +19,6 @@ public class ConsumerServiceImpl implements ConsumerService{
     private final ConsumerRepository consumerRepository;
     private final DoctorAppointmentRepository doctorAppointmentRepository;
     private final PasswordEncoder encoder;
-    private final static String USER_NOT_FOUND =
-            "user with email %s not found";
-
 
     @Override
     public Optional<Consumer> getConsumerById(Long id) {

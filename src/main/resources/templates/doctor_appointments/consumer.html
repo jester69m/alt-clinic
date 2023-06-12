@@ -14,7 +14,7 @@
 
 <div class="container">
   <h1>Електронні записи</h1>
-  <a class="btn btn-primary mb-3" th:href="@{/doctor_appointments/add}">Register New</a>
+  <a class="btn btn-primary mb-3" th:href="@{/doctor_appointments/add}">Записатися</a>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -35,8 +35,8 @@
       <td th:text="${appointment.comment}"></td>
       <td th:text="${appointment.price}"></td>
       <td>
-<!--        <a class="btn btn-info" th:href="@{/doctor_appointments/consumer/edit/{id}(id=${appointment.id})}">Edit</a>-->
-        <a class="btn btn-danger" th:href="@{/doctor_appointments/consumer/delete/{id}(id=${appointment.id})}">Delete</a>
+<!--        <a class="btn btn-info" th:href="@{/doctor_appointments/consumer/edit/{id}(id=${appointment.id})}">Редагувати</a>-->
+        <a class="btn btn-danger" th:href="@{/doctor_appointments/consumer/delete/{id}(id=${appointment.id})}">Видалити</a>
       </td>
     </tr>
     </tbody>

@@ -2,7 +2,6 @@ package com.mis.altclinic.doctors;
 
 import com.mis.altclinic.doctor_appointments.DoctorAppointment;
 import com.mis.altclinic.doctor_appointments.DoctorAppointmentRepository;
-import com.mis.altclinic.doctor_appointments.DoctorAppointmentService;
 import com.mis.altclinic.medservices.MedService;
 import com.mis.altclinic.users.Role;
 import lombok.RequiredArgsConstructor;
@@ -74,11 +73,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Doctor update(Long id, DoctorDto doctor) {
+    public void update(Long id, DoctorDto doctor) {
         log.info("IN DoctorServiceImpl update {}", doctor);
         Optional<Doctor> check = findById(id);
         if (check.isEmpty())
-            return null;
+            return;
         Doctor updated = check.get();
         updated.setFirst_name(doctor.getFirst_name());
         updated.setLast_name(doctor.getLast_name());
@@ -95,7 +94,7 @@ public class DoctorServiceImpl implements DoctorService {
         if(doctor.getMedServices() != null)
             updated.setMedServices(doctor.getMedServices());
 
-        return doctorRepository.save(updated);
+        doctorRepository.save(updated);
     }
 
     @Override
@@ -108,7 +107,7 @@ public class DoctorServiceImpl implements DoctorService {
             doctorAppointmentRepository.save(doctorAppointment);
         }
 
-        Doctor doctor = doctorRepository.findById(id).get();
+        Doctor doctor = doctorRepository.findById(id).orElseThrow();
         doctor.setMedServices(null);
         doctorRepository.save(doctor);
 

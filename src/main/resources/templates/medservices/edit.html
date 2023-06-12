@@ -6,10 +6,27 @@
 
   <div th:replace="fragments/header :: header-css"></div>
 
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      width: 400px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+  </style>
+
 </head>
 <body>
 
-<div class="container">
+<div class="form-container">
   <h1>Відредагуйте медичну послугу</h1>
   <form method="post" th:action="@{/medservices/edit/{id}(id=${medService.id})}"  th:object="${medService}">
     <div class="form-group">
@@ -26,7 +43,7 @@
     </div>
     <br>
     <button class="btn btn-primary" type="submit">Оновити</button>
-    <a class="btn btn-secondary" th:href="@{/medservices}">Скасувати</a>
+    <a class="btn btn-danger" th:href="@{/medservices}">Скасувати</a>
   </form>
 </div>
 </body>

@@ -7,13 +7,29 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css}"/>
 
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+
 </head>
 <body>
 
 <div th:replace="~{fragments/header :: menu}"></div>
 
-
-<div class="container">
+<div class="form-container">
 
 
     <h2>Створити електронний запис</h2>
@@ -46,7 +62,7 @@
 
 
         <button class="btn btn-primary" type="submit">Create</button>
-        <a class="btn btn-secondary" th:href="@{/doctor_appointments}">Cancel</a>
+        <a class="btn btn-danger" th:href="@{/doctor_appointments}">Cancel</a>
     </form>
 </div>
 

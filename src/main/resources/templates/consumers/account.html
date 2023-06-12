@@ -12,20 +12,20 @@
 <div th:replace="~{fragments/header :: menu}"></div>
 
 <div class="container">
-  <h1>Consumer</h1>
+  <h1>Профіль</h1>
   <p>
-    <strong>First Name:</strong> <span th:text="${consumer.first_name}"></span><br>
-    <strong>Last Name:</strong> <span th:text="${consumer.last_name}"></span><br>
-    <strong>Patronymic:</strong> <span th:text="${consumer.patronymic}"></span><br>
+    <strong>Ім'я:</strong> <span th:text="${consumer.first_name}"></span><br>
+    <strong>Прізвище:</strong> <span th:text="${consumer.last_name}"></span><br>
+    <strong>По-батькові:</strong> <span th:text="${consumer.patronymic}"></span><br>
     <strong>Email:</strong> <span th:text="${consumer.email}"></span><br>
-    <strong>Password: ********</strong> <br>
-    <strong>Phone Number:</strong> <span th:text="${consumer.phone_number}"></span><br>
-    <strong>Address:</strong> <span th:text="${consumer.address}"></span><br>
-    <strong>Age:</strong> <span th:text="${consumer.age}"></span><br>
-    <strong>Blood Type:</strong> <span th:text="${consumer.blood_type}"></span><br><br>
+    <strong>Пароль: ********</strong> <br>
+    <strong>Мобільний номер:</strong> <span th:text="${consumer.phone_number}"></span><br>
+    <strong>Адреса:</strong> <span th:text="${consumer.address}"></span><br>
+    <strong>Вік:</strong> <span th:text="${consumer.age}"></span><br>
+    <strong>Група крові:</strong> <span th:text="${consumer.blood_type}"></span><br><br>
 
-    <!--    <a class="btn btn-info" th:href="@{/consumers/edit/{id}(id=${consumer.id})}">Edit</a>-->
-    <!--    <a class="btn btn-danger" th:href="@{/consumers/delete/{id}(id=${consumer.id})}">Delete</a>-->
+    <!--    <a class="btn btn-info" th:href="@{/consumers/edit/{id}(id=${consumer.id})}">Редагувати</a>-->
+    <!--    <a class="btn btn-danger" th:href="@{/consumers/delete/{id}(id=${consumer.id})}">Видалити</a>-->
   </p>
 </div>
 

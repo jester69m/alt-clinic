@@ -1,15 +1,12 @@
 package com.mis.altclinic.consumers;
 
-import com.mis.altclinic.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/consumers")
@@ -17,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ConsumerController {
 
     private final ConsumerService consumerService;
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -53,7 +49,7 @@ public class ConsumerController {
 
     @GetMapping("/edit/{id}")
     public String showEditConsumerForm(@PathVariable Long id, Model model) {
-        model.addAttribute("consumer", consumerService.getConsumerById(id).get());
+        model.addAttribute("consumer", consumerService.getConsumerById(id).orElseThrow());
         return "consumers/edit";
     }
 
