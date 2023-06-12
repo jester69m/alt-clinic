@@ -33,9 +33,9 @@
       <td th:text="${#temporals.format(appointment.getTime(), 'HH:mm')}"></td>
       <td th:text="${appointment.comment}"></td>
       <td th:text="${appointment.price}"></td>
-      <td>
-        <a class="btn btn-danger" th:href="@{/doctor_appointments/doctor/delete/{id}(id=${appointment.id})}">Delete</a>
-      </td>
+<!--      <td>-->
+<!--        <a class="btn btn-danger" th:href="@{/doctor_appointments/doctor/delete/{id}(id=${appointment.id})}">Delete</a>-->
+<!--      </td>-->
     </tr>
     </tbody>
   </table>

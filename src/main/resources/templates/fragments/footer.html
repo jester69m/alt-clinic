@@ -2,27 +2,42 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
       xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .wrapper {
+            min-height: 100%;
+            margin-bottom: -50px; /* Set negative margin to account for footer height */
+        }
+
+        .footer,
+        .push {
+            height: 50px; /* Height of the footer */
+        }
+    </style>
 </head>
 <body>
-<div th:fragment="footer">
+<div class="wrapper">
+    <!-- Rest of your page content -->
 
-    <div class="container">
+    <div th:fragment="footer" class="footer">
+        <div class="container">
+            <footer>
+                <!-- this is footer -->
+                &copy; 2023 alt-clinic.com
+                <span sec:authorize="isAuthenticated()">
+                    | Logged user: <span sec:authentication="name"></span> |
+                    Roles: <span sec:authentication="principal.authorities"></span> |
+                    <a th:href="@{/logout}">Sign Out</a>
+                </span>
 
-        <footer>
-            <!-- this is footer -->
-            &copy; 2023 alt-clinic.com
-            <span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
-                <a th:href="@{/logout}">Sign Out</a>
-            </span>
-
-            <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
-                    type="text/javascript"></script>
-
-        </footer>
+                <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>
+            </footer>
+        </div>
     </div>
-
+    <div class="push"></div>
 </div>
 </body>
 </html>

@@ -51,18 +51,18 @@
             <a class="nav-link" th:href="@{/medservices}">Медичні послуги</a>
           </li>
           <li class="nav-item">
-            <a
-                    th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-                    class="nav-link" th:href="@{/consumers}">Consumers</a>
+<!--            <a-->
+<!--                    th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"-->
+<!--                    class="nav-link" th:href="@{/consumers}">Consumers</a>-->
             <a
                     th:if="${#authorization.expression('hasAuthority(''ROLE_CONSUMER'')')}"
                     class="nav-link" th:href="@{/consumers/info}">Акаунт</a>
 
           </li>
           <li class="nav-item">
-            <a
-                    th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"
-                    class="nav-link" th:href="@{/doctor_appointments}">Doctor Appointments</a>
+<!--            <a-->
+<!--                    th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}"-->
+<!--                    class="nav-link" th:href="@{/doctor_appointments}">Doctor Appointments</a>-->
             <a
                     th:if="${#authorization.expression('hasAuthority(''ROLE_CONSUMER'')')}"
                     class="nav-link" th:href="@{/doctor_appointments/consumer}">Мої записи</a>

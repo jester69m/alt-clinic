@@ -41,7 +41,7 @@
         <div class="form-group">
             <label for="appointmentDate">Дату:</label>
             <input class="form-control" id="appointmentDate" name="appointmentDate" th:field="*{appointmentDate}"
-                   th:min="${minDate}" type="date">
+                   th:min="${minDate}" type="date" onchange="disableWeekendDates()">
         </div>
         <br>
         <input class="btn btn-primary" type="submit" value="Book Appointment">
@@ -68,6 +68,17 @@
             }
         }
         console.log(doctorSelect)
+    }
+
+    function disableWeekendDates() {
+        const appointmentDateInput = document.getElementById("appointmentDate");
+        const selectedDate = new Date(appointmentDateInput.value);
+        const dayOfWeek = selectedDate.getDay();
+
+        if (dayOfWeek === 6 || dayOfWeek === 0) { // 6 = Saturday, 0 = Sunday
+            appointmentDateInput.value = '';
+            alert("Please choose a weekday. Saturdays and Sundays are not available.");
+        }
     }
 </script>
 

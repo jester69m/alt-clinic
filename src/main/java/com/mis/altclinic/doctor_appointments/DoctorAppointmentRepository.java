@@ -1,5 +1,6 @@
 package com.mis.altclinic.doctor_appointments;
 
+import com.mis.altclinic.consumers.Consumer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,4 +24,6 @@ public interface DoctorAppointmentRepository extends JpaRepository<DoctorAppoint
     List<DoctorAppointment> findAllByDoctorId(Long id);
 
     List<DoctorAppointment> findAllByConsumerId(Long id);
+
+    boolean existsByConsumerAndDoctorId(Consumer consumer, Long doctorId);
 }
