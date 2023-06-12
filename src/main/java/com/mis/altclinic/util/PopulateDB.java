@@ -106,17 +106,17 @@ public class PopulateDB {
         List<Consumer> consumers = List.of(c1,c2,c3,c4,c5,c6,c7,c8,c9);
         consumerService.saveAll(consumers);
 
-        DoctorAppointment da1 = new DoctorAppointment(c1, d1, LocalDateTime.now().plusDays(2).minusHours(10), "Some problem", 100.0);
-        DoctorAppointment da2 = new DoctorAppointment(c2, d2, LocalDateTime.now().plusDays(1).minusHours(10), "Some problem", 200.0);
-        DoctorAppointment da3 = new DoctorAppointment(c3, d3, LocalDateTime.now().plusDays(3).minusHours(10), "Some problem", 300.0);
-        DoctorAppointment da4 = new DoctorAppointment(c4, d4, LocalDateTime.now().plusDays(4).minusHours(10), "Some problem", 150.0);
-        DoctorAppointment da5 = new DoctorAppointment(c5, d5, LocalDateTime.now().plusDays(5).minusHours(10), "Some problem", 100.0);
-        DoctorAppointment da6 = new DoctorAppointment(c6, d5, LocalDateTime.now().plusDays(6).minusHours(10), "Some problem", 170.0);
-        DoctorAppointment da7 = new DoctorAppointment(c7, d1, LocalDateTime.now().plusDays(7).minusHours(10), "Some problem", 100.0);
-        DoctorAppointment da8 = new DoctorAppointment(c1, d6, LocalDateTime.now().plusDays(8).minusHours(10), "Some problem", 100.0);
-        DoctorAppointment da9 = new DoctorAppointment(c1, d7, LocalDateTime.now().plusDays(1).minusHours(10), "Some problem", 180.0);
-        DoctorAppointment da10 = new DoctorAppointment(c2, d6, LocalDateTime.now().plusDays(2).minusHours(10), "Some problem", 1000.0);
-        DoctorAppointment da11 = new DoctorAppointment(c2, d7, LocalDateTime.now().minusDays(10).minusHours(10), "Some problem", 10000.0);
+        DoctorAppointment da1 = new DoctorAppointment(c1, d1, LocalDateTime.now().plusDays(2).plusHours(1), "Some problem", 100.0);
+        DoctorAppointment da2 = new DoctorAppointment(c2, d2, LocalDateTime.now().plusDays(1).plusHours(2), "Some problem", 200.0);
+        DoctorAppointment da3 = new DoctorAppointment(c3, d3, LocalDateTime.now().plusDays(3).plusHours(3), "Some problem", 300.0);
+        DoctorAppointment da4 = new DoctorAppointment(c4, d4, LocalDateTime.now().plusDays(1).plusHours(4), "Some problem", 150.0);
+        DoctorAppointment da5 = new DoctorAppointment(c5, d5, LocalDateTime.now().plusDays(6).plusHours(5), "Some problem", 100.0);
+        DoctorAppointment da6 = new DoctorAppointment(c6, d5, LocalDateTime.now().plusDays(7).plusHours(6), "Some problem", 170.0);
+        DoctorAppointment da7 = new DoctorAppointment(c7, d1, LocalDateTime.now().plusDays(7).plusHours(7), "Some problem", 100.0);
+        DoctorAppointment da8 = new DoctorAppointment(c1, d6, LocalDateTime.now().plusDays(8).plusHours(1), "Some problem", 100.0);
+        DoctorAppointment da9 = new DoctorAppointment(c1, d7, LocalDateTime.now().plusDays(1).plusHours(2), "Some problem", 180.0);
+        DoctorAppointment da10 = new DoctorAppointment(c2, d6, LocalDateTime.now().plusDays(2) .plusHours(1),"Some problem", 1000.0);
+        DoctorAppointment da11 = new DoctorAppointment(c2, d7, LocalDateTime.now().minusDays(9).plusHours(2), "Some problem", 10000.0);
 
         List<DoctorAppointment> doctorAppointments = List.of(da1,da2,da3,da4,da5,da6,da7,da8,da9,da10,da11);
         doctorAppointmentService.saveAll(doctorAppointments);

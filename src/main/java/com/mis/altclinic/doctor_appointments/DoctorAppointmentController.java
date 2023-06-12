@@ -38,6 +38,7 @@ public class DoctorAppointmentController {
     @GetMapping("/add")
     public String showChoseDoctorDateForm(Model model) {
         model.addAttribute("doctors", doctorAppointmentService.getAvailableDoctorsForUser());
+        model.addAttribute("doctorAppointments", doctorAppointmentService.findAll());
         model.addAttribute("specialities", doctorService.getAllSpecialities());
         model.addAttribute("minDate", LocalDate.now());
         model.addAttribute("doctorDate", new ChooseDoctorDateRequest());

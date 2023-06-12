@@ -13,7 +13,6 @@
 
 <div class="container">
 
-
     <h1>Електронний запис</h1>
 
     <!-- Check for error attribute and display error message if present -->
@@ -26,8 +25,7 @@
             <label for="speciality">Спеціальність:</label>
             <select class="form-control" id="speciality" name="speciality" onchange="updateDoctorList(this.value)">
                 <option value="">-- Select Specialty --</option>
-                <option th:each="speciality : ${specialities}" th:text="${speciality}"
-                        th:value="${speciality}"></option>
+                <option th:each="speciality : ${specialities}" th:text="${speciality}" th:value="${speciality}"></option>
             </select>
         </div>
         <br>
@@ -40,34 +38,60 @@
         <br>
         <div class="form-group">
             <label for="appointmentDate">Дату:</label>
-            <input class="form-control" id="appointmentDate" name="appointmentDate" th:field="*{appointmentDate}"
-                   th:min="${minDate}" type="date" onchange="disableWeekendDates()">
+            <input class="form-control" id="appointmentDate" name="appointmentDate" th:field="*{appointmentDate}" th:min="${minDate}" type="date" onchange="disableWeekendDates()">
         </div>
         <br>
         <input class="btn btn-primary" type="submit" value="Book Appointment">
     </form>
 </div>
+
 <div th:replace="~{fragments/footer :: footer}"></div>
 
 <script th:src="@{https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
 
 <script th:inline="javascript">
-
     function updateDoctorList(selectedSpecialty) {
         const doctors = [[${doctors}]];
         const doctorSelect = document.getElementById("doctor");
         doctorSelect.innerHTML = '';
 
+        const selectedDoctorId = doctorSelect.value;
+
         for (let i = 0; i < doctors.length; i++) {
-            console.log("doctor: " + doctors[i])
             if (doctors[i].specialty === selectedSpecialty) {
                 const option = document.createElement("option");
                 option.value = doctors[i].id;
                 option.text = doctors[i].last_name + ' ' + doctors[i].first_name;
-                doctorSelect.appendChild(option);
+
+                if (doctors[i].id === selectedDoctorId) {
+                    option.selected = true; // Preserve the selected doctor if available
+                }
+
+                if (!isDoctorAppointmentExists(doctors[i].id)) {
+                    doctorSelect.appendChild(option);
+                }
             }
         }
-        console.log(doctorSelect)
+    }
+
+    function isDoctorAppointmentExists(doctorId) {
+        const appointments = [[${doctorAppointments}]];
+        const selectedDate = new Date(document.getElementById("appointmentDate").value);
+
+        for (let i = 0; i < appointments.length; i++) {
+            const appointmentDate = new Date(appointments[i].appointmentDate);
+            if (appointments[i].doctorId === doctorId && isSameDate(selectedDate, appointmentDate)) {
+                return true; // Appointment already exists for the selected doctor and date
+            }
+        }
+
+        return false;
+    }
+
+    function isSameDate(date1, date2) {
+        return date1.getFullYear() === date2.getFullYear()
+            && date1.getMonth() === date2.getMonth()
+            && date1.getDate() === date2.getDate();
     }
 
     function disableWeekendDates() {
